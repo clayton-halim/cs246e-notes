@@ -5,8 +5,8 @@ reading sections are referenced to this book.
 
 ## Table of Contents
 
-1. Program Input / Output, References
-2. References, Make Files
-3. Linked Lists, Arrays, Preprocessor, Namespaces
-4. Contructors
-5. Destructors
+1. [Program Input / Output, References](Notes_1.md)
+2. [References, Make Files](Notes_2.md)
+3. [Linked Lists, Arrays, Preprocessor, Namespaces](Notes_3.md)
+4. [Contructors](Notes_4.md)
+5. [Destructors](Notes_5.md)
