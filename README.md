@@ -10,3 +10,4 @@ reading sections are referenced to this book.
 3. [Linked Lists, Arrays, Preprocessor, Namespaces](Notes/Notes_3.md)
 4. [Contructors](Notes/Notes_4.md)
 5. [Destructors](Notes/Notes_5.md)
+6. [Rvalue References](Notes/Notes_6.md)
