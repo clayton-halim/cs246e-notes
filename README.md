@@ -11,4 +11,5 @@ reading sections are referenced to this book.
 1. [Contructors](Notes/Notes_4.md)
 1. [Destructors](Notes/Notes_5.md)
 1. [Rvalue References](Notes/Notes_6.md)
-1. [Copy/Move Elision, `const` Overloading,  Tampering](Notes/Notes_7.md) 
+1. [Copy/Move Elision, `const` Overloading,  Tampering](Notes/Notes_7.md)
+1. [Valgrind, GDB](Notes/Notes_8.md) 
