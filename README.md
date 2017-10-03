@@ -14,3 +14,4 @@ reading sections are referenced to this book.
 1. [Copy/Move Elision, `const` Overloading,  Tampering](Notes/Notes_7.md)
 1. [Valgrind, GDB](Notes/Notes_8.md) 
 1. [Tampering (cont.), Iterators](Notes/Notes_9.md)
+1. [Iterators (cont.), Exceptions, Templates](Notes/Notes_10.md)
