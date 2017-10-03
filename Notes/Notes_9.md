@@ -15,7 +15,7 @@ How can we enforce this?
 
 ```C++
 class List {
-    stuct Node {    // Private nested class - not available outside
+    struct Node {    // Private nested class - not available outside
         int data;
         Node *next; // ... methods
     };
