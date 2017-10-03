@@ -132,7 +132,7 @@ for (list::iterator it = l.begin(); it != l.end(); ++it) {
 }
 ```
 
-**Q:** Should List::being and List::end be `const` methods?  
+**Q:** Should List::begin and List::end be `const` methods?  
 **Consider:**
 
 ```C++
