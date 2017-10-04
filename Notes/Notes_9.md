@@ -132,7 +132,7 @@ for (list::iterator it = l.begin(); it != l.end(); ++it) {
 }
 ```
 
-**Q:** Should List::being and List::end be `const` methods?  
+**Q:** Should List::begin and List::end be `const` methods?  
 **Consider:**
 
 ```C++
@@ -158,7 +158,7 @@ ostream &operator<<(ostream &out, const List&l) {
 
 Will compile but shouldn't, the list is supposed to be `const`, but it does because `*` returns as non-`const`
 
-**Conclusion:** iteration over `const` is different from iteratoin over non-`const`
+**Conclusion:** iteration over `const` is different from iteration over non-`const`
 - Make a second iterator class
 
 ```C++
