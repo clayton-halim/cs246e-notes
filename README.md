@@ -15,3 +15,4 @@ reading sections are referenced to this book.
 1. [Valgrind, GDB](Notes/Notes_8.md) 
 1. [Tampering (cont.), Iterators](Notes/Notes_9.md)
 1. [Iterators (cont.), Exceptions, Templates](Notes/Notes_10.md)
+1. [Member Initialization Lists](Notes/Notes_11.md)
