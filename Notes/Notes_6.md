@@ -111,7 +111,7 @@ We need to be able to tell whether other is a reference to a temporary object, o
 **Move Constructors** - steals other's data
 
 ```C++
-struct Node: data{other.data}, next{other.next}} {
+struct Node {
     ...
     Node(Node &&other): data{other.data}, next{other.next} {
         other.next = nullptr;
@@ -130,7 +130,7 @@ struct Node {
     ...
     Node &operator=(Node &&other) {  // steal other's data
         using std::swap;            // destroy my old data
-        swap(data, other.data);     // Easy: swap without the cop
+        swap(data, other.data);     // Easy: swap without the copy
         swap(next, other.next);
 
         return *this;
@@ -174,7 +174,7 @@ What if `name` points to an rvalue?
 struct Student {
     std::string name;
 
-    Student (std::string name): name{name} {  // {name} may come frm an rvalue, but it is an lvalue
+    Student (std::string name): name{name} {  // {name} may come from an rvalue, but it is an lvalue
         ...
     }
 };
@@ -191,7 +191,7 @@ struct Student {
 }
 ```
 
-`name{std::move(name)}` forces `name` to be treated as an rvalue, now stirngs move constructor
+`name{std::move(name)}` forces `name` to be treated as an rvalue, now strings move constructor
 
 ```C++
 struct Student {
