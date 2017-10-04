@@ -111,7 +111,7 @@ We need to be able to tell whether other is a reference to a temporary object, o
 **Move Constructors** - steals other's data
 
 ```C++
-struct Node: data{other.data}, next{other.next}} {
+struct Node {
     ...
     Node(Node &&other): data{other.data}, next{other.next} {
         other.next = nullptr;
