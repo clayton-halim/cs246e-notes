@@ -1,6 +1,6 @@
 [Linear Collections and Modularity <<](./problem_2.md) | [**Home**](../README.md) | [>> Copies](./problem_4.md) 
 
-# Linear Collections and Memory Management
+# Problem 3: Linear Collections and Memory Management
 **2017-09-14**
 **Readings:** 7.7.1, 14, 16.2 
 
