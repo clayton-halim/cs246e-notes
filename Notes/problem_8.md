@@ -1,68 +1,12 @@
-# Tampering (cont.)
+[Tampering << ](./problem_7.md) | [**Home**](../README.md) | [>> Staying in bounds](./problem_9.md) 
+
+# Problem 8: Efficient Iteration
 **2017-09-28**
-
-A similar problem with linked lists:
-
-```C++
-Node n {3, nullptr};    // Stack allocated
-Node m {4, &n}; // m's dtor will try to delete &n (undefined)
-```
-
-There was an invariant that - `next` is `nullptr` or was allocated by `new`
-
-How can we enforce this? 
-- Encapsulate Node inside a "wrapper" class
-
-```C++
-class List {
-    struct Node {    // Private nested class - not available outside
-        int data;
-        Node *next; // ... methods
-    };
-
-    Node *theList;
-    
-    public:
-        List(): theList{nullptr} {}
-        ~list() {delete theList;}
-        size_t size() const;
-
-        void push_front(int n) {
-            theList = new Node{n, theList};
-        }
-
-        void pop_font() {
-            if (theList) {
-                Node *tmp = theList;
-                theList = theList->next;
-                tmp->next = nullptr;
-                delete tmp;
-            }
-        }
-
-        const int &operator[](size_t i) const {
-            Node *cur = theList;
-            for (size_t j = 0; j < i && cur; ++j, cur=cur->next);
-            return curr->daata;
-        }
-
-        int &operator[](size_t i) {
-            Node *cur = theList;
-            for (size_t j = 0; j < i && cur; ++j, cur=cur->next);
-            return curr->data;
-        }   
-};
-```
-Client cannot manipulate the list directly
-- No access to next pointers
-- Invariant is maintained
-
-## Problem 8: Efficient Iteration
 
 Consider the two implementations Vector and List
 
 ```C++
-Vector v;
+vector v;
 v.push_back(___);
 ...
 
@@ -75,7 +19,7 @@ for (size_t i = 0; i < v.size(); ++i) {
 - O(n) traversal
 
 ```C++
-List l;
+list l;
 l.push_front(___);
 ...
 
@@ -103,7 +47,7 @@ for (int *p = arr; p != arr + size; ++p) {
 ```
 
 ```C++
-class List {
+class list {
     struct Node {...};
     Node *theList;
 
@@ -125,19 +69,19 @@ class List {
         iterator end() {return iterator{nullptr};}
 };
 
-List l;
+list l;
 
 for (list::iterator it = l.begin(); it != l.end(); ++it) {
     std::cout << *it << '\n';
 }
 ```
 
-**Q:** Should List::begin and List::end be `const` methods?  
+**Q:** Should list::begin and list::end be `const` methods?  
 **Consider:**
 
 ```C++
-ostream &operator<<(ostream &out, const List &l) {
-    for (List::iterator it = l.begin(); it != l.end(); ++it) {
+ostream &operator<<(ostream &out, const list &l) {
+    for (list::iterator it = l.begin(); it != l.end(); ++it) {
         ...
     }
     ...
@@ -148,7 +92,7 @@ ostream &operator<<(ostream &out, const List &l) {
 Won't compile if `begin`/`end` are not `const`
 
 ```C++
-ostream &operator<<(ostream &out, const List&l) {
+ostream &operator<<(ostream &out, const list&l) {
     for (...) {
         out << *it << '\n';
         ++*it;  // increment items in the list
@@ -162,7 +106,7 @@ Will compile but shouldn't, the list is supposed to be `const`, but it does beca
 - Make a second iterator class
 
 ```C++
-class List {
+class list {
     struct Node {...};
     Node *theList;
 
@@ -209,7 +153,7 @@ class List {
 Works now:
 
 ```C++
-List::const_iterator it = l.begin();    // Mouthful
+list::const_iterator it = l.begin();    // Mouthful
 ```
 
 Shorter:
@@ -260,7 +204,7 @@ One small encapsulation problem:
 **Solution:** _friendship_
 
 ```C++
-class List {
+class list {
     ...
     public:
         class iterator {
@@ -269,13 +213,68 @@ class List {
            
             public:
             ...
-            friend class List;  // List has access to all iterator's/const_iterator's implementation
+            friend class list;  // list has access to all iterator's/const_iterator's implementation
         };
 
-        class const_iterator {  // Same (friend class List)
+        class const_iterator {  // Same (friend class list)
             ...
         }
 };
 ```
 
+Recall: Encapsulation + Iterators for linked list
+
+Can do the same for vectors:
+
+```C++
+class vector {
+    size_t size, cap;
+    int *theVector;
+    
+    public:
+        class iterator {
+            int *p;
+            ...
+        };
+
+        class const_iterator {
+            ...
+        };
+
+        iterator begin() {
+            return iterator{theVector};
+        }
+
+        iterator end() {
+            return iterator{theVector + n};
+        }
+
+        const_iterator begin() const {
+            return const_iterator{theVector};
+        }
+
+        const_iterator end() const {
+            return const_iterator{theVector + n};
+        }
+};
+```
+
 Limit friendships, they weaken encapsulation
+
+Could do this, OR:
+
+```C++
+typedef int *iterator;
+typedef const int *const_iterator;
+
+---
+
+using iterator = int*;
+using const_iterator = const int*;
+
+iterator begin() {return theVector;}
+iterator end() {return theVector + n;}
+```
+
+---
+[Tampering << ](./problem_7.md) | [**Home**](../README.md) | [>> Staying in bounds](./problem_9.md) 

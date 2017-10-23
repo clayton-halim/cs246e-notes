@@ -1,7 +1,9 @@
-# Linear Collections and Modularity
+[Input/Output <<](./problem_1.md) | [**Home**](../README.md) | [>> Linear Collections and Memory Management](./problem_3.md) 
+
+# Problem 2: Linear Collections and Modularity
 **2017-09-14**
 
-## Linked lists and arrays
+### Linked lists and arrays
 
 **Linked List**
 _node.h_
@@ -219,55 +221,5 @@ namespace List {
 }
 ```
 
-# Linear Collections and Memory Management
-
-**Arrays**
-`int a[10];`
-
-- On the stack, fixed size
-
-On the heap:
-`int *p = new int[10];`
-
-To delete:
-`delete []p;`
-
-Use `new` with `delete`, and `new [...]` with `delete []`
-
-Mismatching these is undefined behaviour
-
-**Problem:** what if our array isn't big enough
-Note: no `realloc` for `new`/`delete`  
-
-Use abstraction to solve the problem:
-
-```C++
-#ifndef VECTOR_H
-#define VECTOR_H
-
-namespace CS246E {
-    struct vector {
-        size_t size, cap;
-        int *theVector;
-    }
-};
-
-const size_t startsize = 1;
-
-vector make_vector();
-
-size_t size(const vector &v);
-
-int &itemAt(const vector &v, size_t i);
-
-void push_back(const vector &v, int x);
-
-void pop_back(const vector&v);
-
-void dispose(vector &v);
-
-#endif
-```
-
-
-
+---
+[Input/Output <<](./problem_1.md) | [**Home**](../README.md) | [>> Linear Collections and Memory Management](./problem_3.md) 

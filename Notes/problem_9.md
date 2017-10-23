@@ -1,59 +1,7 @@
-# Iterators (cont.)
+[Efficient Iteration <<](./problem_8.md) | [**Home**](../README.md) | [>> I want a vector of chars](./problem_10.md)
+
+# Problem 9: Staying in Bounds
 **2017-10-03**
-
-Recall: Encapsulation + Iterators for linked list
-
-Can do the same for vectors:
-
-```C++
-class Vector {
-    size_t size, cap;
-    int *theVector;
-    
-    public:
-        class iterator {
-            int *p;
-            ...
-        };
-
-        class const_iterator {
-            ...
-        };
-
-        iterator begin() {
-            return iterator{theVector};
-        }
-
-        iterator end() {
-            return iterator{theVector + n};
-        }
-
-        const_iterator begin() const {
-            return const_iterator{theVector};
-        }
-
-        const_iterator end() const {
-            return const_iterator{theVector + n};
-        }
-};
-```
-
-Could do this, OR:
-
-```C++
-typedef int *iterator;
-typedef const int *const_iterator;
-
----
-
-using iterator = int*;
-using const_iterator = const int*;
-
-iterator begin() {return theVector;}
-iterator end() {return theVector + n;}
-```
-
-## Problem 9: Staying in Bounds
 
 ```C++
 Vector v;
@@ -90,7 +38,7 @@ class Vector {
 ```C++
 class range_error {};
 
-class Vector {
+class vector {
     ...
     public:
         int &at(size_t i) {
@@ -103,14 +51,14 @@ class Vector {
 - Client's options
 1. Do nothing
     ```C++
-    Vector v;
+    vector v;
     v.push_back(0);
     v.at(1) // The exception will crash the program
     ```
 1. Catch it
     ```C++
     try {
-        Vector v;
+        vector v;
         v.push_back(0);
         v.at(1);
     } catch (range_error &r) {  // r is the thrown object, catch by reference saves a copy operation
@@ -120,7 +68,7 @@ class Vector {
 1. Let your caller catch it
     ```C++
     int f() {
-        Vector v;
+        vector v;
         v.push_back(0);
         v.at(1);
     }
@@ -237,56 +185,5 @@ Never let destructors throw, swallow the exception if necessary
 
 Also note that you can throw _any value_, not just objects
 
-## Problem 10: I want a vector of chars
-
-Start over? No
-
-Introduce a major abstraction mechanism, **templates**
-- Generalize overtypes
-
-_Vector.h_
-
-```C++
-namespace CS246E {
-    template<typename T> class Vector {
-            size_t n, cap;
-            T* theVector;
-
-        public:
-            Vector();
-            ...
-            void push_back(T n);
-            T &operator[](size_t i);
-            const T &operator[] const(size_t)
-
-            using iterator = T*;
-            using const_iterator = const T*;
-            // etc.
-    };
-
-    template<typename T> Vector<T>::vector() n{0}, cap{1}, theVector{new T[cap]} {}
-    template<typename T> void push_back(T n) {...}
-    /// etc.
-}
-```
-
-**Note:** Must put implementation in file
-
-_main.cc_
-
-```C++
-int main() {
-    Vector<int> v;  // Vector of ints
-    v.push_back(1);
-    ...
-    Vector<char> w; // Vector of chars
-    v.push_back('a');
-    ...
-}
-```
-
-- **Semantics:**
-    - The first time the compile encounters `Vector<int>`, it creates a version of the vector code where `int` reaplces `T` and compiles that new class
-    - Can't do that unless it has all the details about the class
-    - So implementation must be available in `.h`
-    - Can also write bodies inline
+---
+[Efficient Iteration <<](./problem_6.md) | [**Home**](../README.md) | [>> I want a vector of chars](./problem_10.md)

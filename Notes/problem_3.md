@@ -1,7 +1,58 @@
-# Linear Collections and Modularity (cont.)
-**2017-09-19**
+[Linear Collections and Modularity <<](./problem_2.md) | [**Home**](../README.md) | [>> Copies](./problem_4.md) 
 
+# Linear Collections and Memory Management
+**2017-09-14**
 **Readings:** 7.7.1, 14, 16.2 
+
+**Arrays**
+`int a[10];`
+
+- On the stack, fixed size
+
+On the heap:
+`int *p = new int[10];`
+
+To delete:
+`delete []p;`
+
+Use `new` with `delete`, and `new [...]` with `delete []`
+
+Mismatching these is undefined behaviour
+
+**Problem:** what if our array isn't big enough
+Note: no `realloc` for `new`/`delete`  
+
+Use abstraction to solve the problem:
+
+_vector.h_
+
+```C++
+#ifndef VECTOR_H
+#define VECTOR_H
+
+namespace CS246E {
+    struct vector {
+        size_t size, cap;
+        int *theVector;
+    }
+};
+
+const size_t startsize = 1;
+
+vector make_vector();
+
+size_t size(const vector &v);
+
+int &itemAt(const vector &v, size_t i);
+
+void push_back(const vector &v, int x);
+
+void pop_back(const vector&v);
+
+void dispose(vector &v);
+
+#endif
+```
 
 _vector.cc_
 
@@ -9,7 +60,7 @@ _vector.cc_
 #include "vector.h"
 
 namespace {  // Anonymous namespace makes the function only visible to file (same as static in C)
-    void increaseCap(CS246E::Vector &v) {
+    void increaseCap(CS246E::vector &v) {
         if (v.size == v.cap) {
             int *newVec = new int[2 * v.cap];
 
@@ -24,31 +75,31 @@ namespace {  // Anonymous namespace makes the function only visible to file (sam
     }
 }
 
-CS246E::Vector CS246E::make_vector() {
-    Vector v {0, startSize, new int[startSize]};
+CS246E::vector CS246E::make_vector() {
+    vector v {0, startSize, new int[startSize]};
     return v;
 }
 
-size_t CS246E::size(const Vector &v) {
+size_t CS246E::size(const vector &v) {
     return v.size;
 }
 
-int &CS246E::itemAt(const Vector &v, size_t i) {
+int &CS246E::itemAt(const vector &v, size_t i) {
     return v.theVector[i];
 }
 
-void CS246E::push_back(Vector &v, int n) {
+void CS246E::push_back(vector &v, int n) {
     increaseCap(v);
     v.theVector[v.size++] = n;
 }
 
-void CS246E::pop_back(Vector &v) {
+void CS246E::pop_back(vector &v) {
     if (v.size > 0) {
         --v.size;
     }
 }
 
-void CS246E::dispose(Vector &v) {
+void CS246E::dispose(vector &v) {
     delete[] v.theVector;
 }
 ```
@@ -220,7 +271,7 @@ Node n {3};  // GOOD
 Node n;  // BAD - no default constructor
 ```
 
-**Object creation protocol**
+## Object creation protocol
 
 When an object is created, there are 4 steps:
 
@@ -262,5 +313,160 @@ struct Student {
 }
 ```
 
+MIL _must_ be used for fields that are 
 
+- Constants
+- References
+- Objects
 
+In general, it should be used as much as possible.
+
+Careful: single argument constructors
+```C++
+struct Node {
+    Node(int data, Node *next = nullptr): ... {}
+}
+```
+
+- Single argument constructors create implicit constructors
+
+```C++
+Node n {4};     // OK
+Node n = 4;     // OK - implicity converted from int to Node
+
+void f(Node n);
+f(4); // OK - maybe trouble
+```
+
+However you can add an `explicit` keyword to disable the implicit conversion
+
+```C++
+explicit struct Node {
+    Node(int data, Node *next = nullptr): ... {}
+}
+
+Node n {4};  // OK
+Node n = 4;  // BAD
+
+f(4) // BAD
+f(Node {4}) // OK
+```
+
+## Object Destructor
+
+A method called the **destructor** (dtor) runs automatically
+
+- Built-in dtor: calls dtor on all fields that are objects
+- Object destruction protocol:
+    1. Dtor body runs
+    2. Fields destructed (dtors called on fields that are objs) in reverse declaration order
+    3. (Later)
+    4. Space deallocated
+
+```C++
+struct Node {
+    int data;
+    Node *next;
+};
+```
+
+In this case the built-in destructor does nothing because neither field is an object
+
+If we have:
+
+```C++
+Node *n = new Node {3, new Node {4, new Node {5, nullptr}}}
+delete n;  // Only deletes the first node (memory leak!)
+```
+
+We can fix this by writing our own destructor:
+
+```C++
+struct Node {
+    ...
+
+    ~Node() {
+        delete next;
+    }
+};
+
+delete n;  // Now frees the whole list
+```
+
+Also:
+
+```C++
+{
+    Node n {1, new Node {2, new Node {3, nullptr}}};
+}  // Scope of n ends; whole list is freed
+```
+
+Objects:
+
+- A constructor always runs when they are created
+- A destructor always runs when they are destroyed
+
+_vector.h_
+
+```C++
+#ifndef VECTOR_H
+#define VECTOR_H
+
+namespace CS246E {
+    struct vector {
+        size_t n, cap;
+        int *theVector;
+
+        vector();
+        size_t size();
+        int &itemAt(size_t i);
+        void push_back();
+        void pop_back();
+        ~vector();
+    };
+}
+#endif
+```
+
+_vector.cc_
+
+```C++
+#include "vector.h"
+
+namespace {
+    void increaseCap(vector &v) {
+        ...
+    }
+}
+
+const size_t startSize = 1;
+
+CS246E::vector::vector(): 
+    n{0}, cap{startSize}, theVector{new int[cap]} {
+}
+
+size_t CS246E::vector::size() {
+    return n;
+}
+
+// Etc.
+
+CS246E::vector::~vector() {
+    delete[] theVector;
+}
+```
+
+_main.cc_
+
+```C++
+int main() {
+    vector v;   // Constructor is already called - no make_vector
+    v.push_back(1);
+    v.push_back(10);
+    v.push_back(100);
+    v.itemAt(0) = 2; 
+}   // No dispose - destructor cleans v up
+```
+
+---
+[Linear Collections and Modularity <<](./problem_2.md) | [**Home**](../README.md) | [>> Copies](./problem_4.md) 
