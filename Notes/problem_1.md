@@ -383,8 +383,8 @@ Advantage:
     - Create a **Makefile**
 
 ```C++
-my cat: main.o echo.o
-    g++ main.o echo.o mycat
+mycat: main.o echo.o
+    g++ main.o echo.o -o mycat
 
 main.o: main.cc echo.h
     g++ -std=c++14 -Wall -c main.cc
