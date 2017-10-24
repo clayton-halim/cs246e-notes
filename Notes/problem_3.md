@@ -1,7 +1,7 @@
 [Linear Collections and Modularity <<](./problem_2.md) | [**Home**](../README.md) | [>> Copies](./problem_4.md) 
 
 # Problem 3: Linear Collections and Memory Management
-**2017-09-14**
+**2017-09-14**  
 **Readings:** 7.7.1, 14, 16.2 
 
 **Arrays**
@@ -13,9 +13,9 @@ On the heap:
 `int *p = new int[10];`
 
 To delete:
-`delete []p;`
+`delete[] p;`
 
-Use `new` with `delete`, and `new [...]` with `delete []`
+Use `new` with `delete`, and `new [...]` with `delete[]`
 
 Mismatching these is undefined behaviour
 
