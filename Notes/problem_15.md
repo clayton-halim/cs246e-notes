@@ -82,13 +82,12 @@ template<typename T> class vector {
 Can clean this up using RAII on the array:
 
 ```C++
-template<typename T> class vector_base {
-        size_t n, cap;
-        T *v;
-    public:
-        vector_base(size_t n): 
-            n{n}, cap{n == 0 ? 1 : n}, v{static_cast<T*>(operator new(cap * sizeof(T)))} {}
-        ~vector_base() { operator delete(v); }
+template<typename T> struct vector_base {
+    size_t n, cap;
+    T *v;
+    vector_base(size_t n): 
+        n{n}, cap{n == 0 ? 1 : n}, v{static_cast<T*>(operator new(cap * sizeof(T)))} {}
+    ~vector_base() { operator delete(v); }
 };
 
 template<typename T> class vector {
