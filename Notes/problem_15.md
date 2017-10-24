@@ -97,7 +97,7 @@ template<typename T> class vector {
         vector(size_t n, const T &x): vb{n} {
             uninitialized_fill(vb.v, vb.v + vb.n, x);
         }
-        ~vector() { destroy_delements(); }
+        ~vector() { destroy_elements(); }
 };
 ```  
 
@@ -114,7 +114,7 @@ Pushback:
 void push_back(const T&x) {
     increaseCap();
     new(vb.v + (vb.n++)) T{x};  // If this throws, hve the same vector
-                    // Don't increment n before you knwo the construction succeded
+                    // Don't increment n before you know the construction succeded
 }
 ``` 
 
