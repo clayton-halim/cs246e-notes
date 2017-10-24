@@ -419,7 +419,7 @@ Shortcuts - use variables:
 
 ```C++
 CXX = g++ (name of compiler)
-CXXFLALS = -std=c++14 -Wall
+CXXFLAGS = -std=c++14 -Wall
 EXEC = myprogram
 OBJECTS = main.o echo.o
 
