@@ -389,7 +389,8 @@ struct Node {
         delete next;
     }
 };
-
+```
+```C++
 delete n;  // Now frees the whole list
 ```
 
