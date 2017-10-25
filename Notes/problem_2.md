@@ -49,7 +49,7 @@ int main() {
     n->next = nullptr;
 
     Node *n2 = new Node {3, new Node {6, nullptr}};
-    Node *n3 = new Node {4, new Node {5. nullptr}};
+    Node *n3 = new Node {4, new Node {5, nullptr}};
 
     delete n;
     delete n2; // Memory leak!! Delete n2->next first
