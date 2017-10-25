@@ -412,7 +412,7 @@ How make works: list a dir in long form `ls -l`
 - Starting at the leaves of the dependency graph
     - if the dependency is newer than the target, rebuild the target ... and so on, up to the root target
 
-ex. echo.cc nwewer than echo.o -rebuild echo.o
+ex. echo.cc newer than echo.o -rebuild echo.o
     echo.o newer than mycat - rebuild mycat
 
 Shortcuts - use variables:
