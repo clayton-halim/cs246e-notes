@@ -15,20 +15,20 @@ Node plusOne(Node n) {
 }
 
 Node n {1, new Node {2, nullptr}};
-Node m = plusOne(n)
+Node m = plusOne(n);
 ```
 
-In this case `other` is a reference to this temporary object created to hold the result of plusOne.
+In this case, "other" is a reference to the temporary object created to hold the result of plusOne.
 
-- Other is a reference to this temporary
+- "Other" is a reference to this temporary
 - Copy constructor deep-copies the data from this temporary
 
-**but** the temporary is just going to be thrown out anyway, as soon as the statement `Node m = plusOne(n)` is done
+**But** the temporary is just going to be thrown out anyway, as soon as the statement `Node m = plusOne(n)` is done
 
 It's wasteful to deep copy the temp, why not steal the data instead? - saves the cost of a copy
-We need to be able to tell whether other is a reference to a temporary object, or a standalone object
+We need to be able to tell whether "other" is a reference to a temporary object, or a standalone object
 
-**Rvalue references** - `Node &&` is a reference to a temporary object (rvalue) of type Node. Version of the constructor that takes a Node &&
+**Rvalue references** - `Node &&` is a reference to a temporary object (rvalue) of type `Node`. We need a version of the constructor that takes a `Node &&`
 
 **Move Constructors** - steals other's data
 
@@ -39,8 +39,9 @@ struct Node {
         other.next = nullptr;
     }
 };
-
-// Similarily
+```
+Similarly:
+```C++
 Node m;
 m = plusOne(n);  // assignment from temporary
 ```
@@ -160,7 +161,7 @@ void doSomething(vector v) {...};   // Pass-by-value - copy/move ctor
 doSomething(makeAVector());   
 ```
 
-Result of makeAVector written directly into the param, there is no copy/move
+Result of `makeAVector()` written directly into the param, there is no copy/move
 
 This is allowed, even if dropping ctor calls would change the behaviour of the program (ex. if the constructors print something).
 
@@ -176,10 +177,10 @@ In summary: Rule of 5 (Big 5)
 
 - If you need to customize any one of
 1. Copy constructor
-1. Copy assignment
-1. Destructor
-1. Move constructor
-1. Move assignment
+2. Copy assignment
+3. Destructor
+4. Move constructor
+5. Move assignment
 
 then you usually need to customize all 5.
 
