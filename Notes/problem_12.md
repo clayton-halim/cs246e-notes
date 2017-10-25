@@ -49,14 +49,14 @@ template<typename T> class vector {
             n{n}, cap{n}, theVector{static_cast<T*>(operator new(n *sizeof(T)))} {
             
             for (size_t i = 0; i < n; ++i)
-                new(theVector + i) T (x);
+                new(theVector + i) T(x);
         }
 
         ...
 
         void push_back(T x) {
             increase_cap();
-            new(theVector + (n++)) T (x);
+            new(theVector + (n++)) T(x);
         }
 
         void pop_back() {
