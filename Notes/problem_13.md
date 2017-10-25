@@ -12,7 +12,7 @@ void push_back(int n);
 ```C++
 void push_back(T x) {   // (1) If T is an object, how many times is T being copied?
     increaseCap();
-    new(theVector + (n++)) T (x);   // (2)
+    new(theVector + (n++)) T(x);   // (2)
 }
 ```
 
@@ -30,7 +30,7 @@ If the arg is an rvalue:
 ```C++
 void push_back(T x) {
     increaseCap(); 
-    new(theVector + (n++)) T (std::move(x));
+    new(theVector + (n++)) T(std::move(x));
 }
 ```
 
@@ -43,13 +43,13 @@ If `T` doesn't have a move constructor: 2 copies
 ```C++
 void push_back(const T &x) {    // No copy, no move
     increaseCap();
-    new(theVector + (n++)) T (x);   // Copy constructor
+    new(theVector + (n++)) T(x);   // Copy constructor
 }
 
 
 void push_back(T &&x) { // No copy, no move
     increaseCap();
-    new(theVector + (n++)) T (std::move(x));
+    new(theVector + (n++)) T(std::move(x));
 }
 ```    
 
@@ -79,14 +79,15 @@ Consider: `std::swap` seems to work on all types
 **Implementation:**
 ```C++
 template<typename T> void swap(T &a, T&b) {
-    T tmp {std::move(a)}
+    T tmp{std::move(a)}
     a = std::move(b);
     b = std::move(tmp);
 }
 ```
 
 ```C++
-int x = 1; y = 2;
+int x = 1;
+int y = 2;
 swap(x, y)  // Equiv swap<int>(x, y);
 ```
 
@@ -98,7 +99,7 @@ Type deduction for template args follows the same rules as type deduction for `a
 
 ### Back to Vector passing constructor args
 
-- We don't know what tpyes constructor args should have
+- We don't know what types constructor args should have
 - T could be any class, could have several constructors
 
 Idea - member template function (like swap, it could take anything)
