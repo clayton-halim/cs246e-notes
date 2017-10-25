@@ -203,8 +203,8 @@ template<typename T, typename... Args> unique_ptr<T> make_unique(Args&&... args)
 ```
 
 `unique_ptr` is an example of the C++ idiom: **Resource Acquisition Is Initialization (RAII)**
-- Any resource that must be properly released (memory, file hamdle, etc.) should be wrapped in a stack-allocated object whose destructor frees it
-- Ex. `unique_ptr`, `ifstream/ofstream` aquire the resource when the object is initialized and release it when the object's destructor runs
+- Any resource that must be properly released (memory, file handle, etc.) should be wrapped in a stack-allocated object whose destructor frees it
+- Ex. `unique_ptr`, `ifstream`/`ofstream` aquire the resource when the object is initialized and release it when the object's destructor runs
 
 ---
 [Less Copying << ](./problem_13.md) | [**Home**](../README.md) | [>> Is vector exception safe?](./problem_15.md) 
