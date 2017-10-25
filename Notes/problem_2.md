@@ -217,7 +217,7 @@ _some\_other\_file.h_
 
 ```C++
 namespace List {
-    struct some\_other\_struct {...};
+    struct some_other_struct {...};
 }
 ```
 
