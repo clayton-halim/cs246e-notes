@@ -151,10 +151,10 @@ void uninitialized_copy_or_move(T *start, T *finish, T *target) {
     T *p;
     try {
         for (p = start; p != finish; ++p, ++target) {
-            new(static_cast<void*>(p)) T{std::move_if_noexcept(*target)};
+            new(static_cast<void*>(target)) T{std::move_if_noexcept(*p)};
         }
     } catch(...) {
-        for (T *q = start; q != p; ++q) (target t(q - p))->~T();
+        for (T *q = start; q != p; ++q) (target + (q - p))->~T();
     }
 }
 ```
