@@ -53,7 +53,7 @@ void push_back(T &&x) { // No copy, no move
 }
 ```    
 
-**lvalue:** 1 copy
+**lvalue:** 1 copy  
 **rvalue:** 1 move
 
 If no move constructor: 1 copy
@@ -171,7 +171,7 @@ void f(C&& x) {
 }
 ```
 
-In the case of `args`, wew don't know if the args are lvalue, rvalues or a mix.  
+In the case of `args`, we don't know if the args are lvalue, rvalues or a mix.  
 Want to call `move` on args if and only if the args are rvalues.
 
 ```C++
