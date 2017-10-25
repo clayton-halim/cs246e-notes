@@ -109,7 +109,7 @@ _main.cc_
 ```C++
 #include "vector.h"
 
-using CS246E::vector;  # only allows you to use vector without CS246E::
+using CS246E::vector;  // only allows you to use vector without CS246E::
 
 int main() {
     vector v = CS246E::make_vector();
