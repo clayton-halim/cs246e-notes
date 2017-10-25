@@ -48,7 +48,7 @@ template<typename T> class vector {
         vector(size_t n, T x = T{}): 
             n{n}, cap{n}, theVector{static_cast<T*>(operator new(n *sizeof(T)))} {
             
-            for (size_t i = 0; 1i < n; ++i)
+            for (size_t i = 0; i < n; ++i)
                 new(theVector + i) T (x);
         }
 
