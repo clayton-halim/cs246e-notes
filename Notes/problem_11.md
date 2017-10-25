@@ -70,12 +70,12 @@ vector<int> v(3, 4);    // 4, 4, 4
 ```
 
 A note on cost: item in an initializer list are stored in contiguous memory (begin method returns a pointer)
-- So we are using one array to build another (2 compies in memory)
+- So we are using one array to build another (2 copies in memory)
 
 Also note:
 - Initializer lists are meant to be immutable
 - Do not try to modify their contents
-- Do note use them as standalone data structures
+- Do not use them as standalone data structures
 - Only one allocation in vector, not several
 - No doubling + reallocating
 - If general, if you know how big your vector will be, you can save reallocation cost by requesting space up front
