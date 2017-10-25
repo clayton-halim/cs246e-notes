@@ -444,7 +444,7 @@ Writing the dependencies still hard (but compiler can help).
 
 ```C
 CXX = g++
-CXX FLAGS = -std=c++14 -Wall -MMD
+CXXFLAGS = -std=c++14 -Wall -MMD
 EXEC = mycat
 OBJECTS = main.o echo.o
 
