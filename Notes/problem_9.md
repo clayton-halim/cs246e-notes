@@ -31,7 +31,7 @@ class Vector {
 `v.at(2)` still wrong - what should happen?
 - Return any `int`, looks like non-error
 - Returning a non-`int`, not type correct
-- Crash the program - can we do better? Don't return. don't crash
+- Crash the program - can we do better? Don't return. Don't crash
 
 **Solution:** raise an `exception`
 
