@@ -97,7 +97,7 @@ template<typename T> class vector {
 };
 ```
 
-**Exercise:** rewrite vector such that `push_back` uses `reserve` instead of `increaseCap`
+**Exercise:** rewrite `vector` such that `push_back` uses `reserve` instead of `increaseCap`
 
 ```C++
 vector<int> v;
