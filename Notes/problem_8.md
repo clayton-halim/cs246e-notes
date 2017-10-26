@@ -116,8 +116,8 @@ class list {
 
             public:
                 iterator(Node *p): p{p} {}
-                bool operator!=(const iterator &other) const {return p != other.p}
-                int &operator*() const {return p->data;}
+                bool operator!=(const iterator &other) const { return p != other.p; }
+                int &operator*() const { return p->data; }
                 iterator &operator++() {    // Prefix version
                     p = p->next;
                     return *this;
@@ -129,24 +129,18 @@ class list {
 
             public:
                 const_iterator(Node *p): p{p} {}
-                bool operator!=(const const_iterator &other) {
-                    return p != other.p;
-                }
-
+                bool operator!=(const const_iterator &other) { return p != other.p; }
+                const int &operator*() const { return p->data; }
                 const_iterator &operator++() {
                     p = p->next;
                     return *this;
                 }
-
-                const int &operator*() const {
-                    return p->data;
-                }
         };
 
-        iterator begin() {return iterator{the_list};}
-        iterator end() {return iterator{nullptr};}
-        const_iterator begin() const {return const_iterator{theList};}
-        const_iterator end() const {return const_iterator {nullptr};}
+        iterator begin() { return iterator{the_list}; }
+        iterator end() { return iterator{nullptr}; }
+        const_iterator begin() const { return const_iterator{theList}; }
+        const_iterator end() const { return const_iterator {nullptr}; }
 };
 ```
 
@@ -179,10 +173,10 @@ ostream &operator<<(___) {
 }
 ```
 
-This is a range based for loop
-- Available for any class with
-    - Methods (or functions) begin and end that return an iterator object
-    - The iterator class must support unary`*`, prefix`++`, `!=`
+This is a range-based `for` loop
+- Available for any class with:
+    - Methods (or functions) `begin()` and `end()` that return an iterator object
+    - The iterator class must support unary`*`, prefix`++`, and `!=`
 
 **Note:**
 - `for (auto n: l) ++n;`
@@ -201,7 +195,7 @@ One small encapsulation problem:
 
 **To fix:** make iterator constructor private  
 **BUT:** List can't create iterators either  
-**Solution:** _friendship_
+**Solution:** _friendship_ <3
 
 ```C++
 class list {
