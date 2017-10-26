@@ -68,7 +68,8 @@ class list {
         iterator begin() {return iterator{theList};}
         iterator end() {return iterator{nullptr};}
 };
-
+```
+```C++
 list l;
 
 for (list::iterator it = l.begin(); it != l.end(); ++it) {
