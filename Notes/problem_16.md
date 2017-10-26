@@ -14,16 +14,16 @@ template<typename T> class vector {
     public:
         iterator insert(iterator posn, const T&x) {
             increaseCap();
-            ptrdiff_t offset = posn - posn_begin(); // ptrdiff_t incase result is negative (in general)
+            ptrdiff_t offset = posn - begin(); // ptrdiff_t incase result is negative (in general)
             iterator newPosn = begin() + offset;
             new(static_cast<void*>(end()) T(std::move(*(end() - 1)));
             ++vb.n;
             for (iterator it = end() - 1; it != Posn; --it) {
                 *it = std::move(*(it - 1));
             }
+            *newPosn = x;
+            return newPosn;
         }
-        *newPosn = x;
-        return newPosn;
     }
 };
 ```
