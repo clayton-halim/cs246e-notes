@@ -34,7 +34,7 @@ namespace CS246E {
 }
 ```
 
-**Note:** Must put implementation in file
+**Note:** Must put implementation in `.h` file
 
 _main.cc_
 
