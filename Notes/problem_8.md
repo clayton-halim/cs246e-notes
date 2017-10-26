@@ -100,7 +100,7 @@ ostream &operator<<(ostream &out, const list&l) {
 }
 ```
 
-Will compile but shouldn't, the list is supposed to be `const`, but it does because `*` returns as non-`const`
+Will compile but shouldn't, the list is supposed to be `const`, but `*` returns as non-`const`
 
 **Conclusion:** iteration over `const` is different from iteration over non-`const`
 - Make a second iterator class
