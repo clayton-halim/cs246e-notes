@@ -41,7 +41,7 @@ void f(const vector &v) {
 ```
 
 - `v` is a const object - cannot change `n`, `cap`, `theVector` (ptr)
-- You can changed items pointed to by theVector
+- You can changed items pointed to by `theVector`
 
 Can we fix this?
 
