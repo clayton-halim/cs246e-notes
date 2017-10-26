@@ -20,7 +20,7 @@ template<typename T> class vector {
 
 - Partially consturcted vector - destructor will not run
     - Broken invariant
-- **Note:** if operator `new` throws - nothing has been allocated
+- **Note:** if `operator new` throws - nothing has been allocated
     - No problem - strong guarantee
 
 **Fix:**
@@ -107,12 +107,12 @@ template<typename T> vector<T>::vector(const vector &other): vb{other.size()} {
 }
 ```
 
-Assignment: copy & swap is exception safe because swap is no-throw
+Assignment: copy & swap is exception-safe because swap is no-throw
 Pushback:
 ```C++
 void push_back(const T&x) {
     increaseCap();
-    new(vb.v + (vb.n++)) T{x};  // If this throws, hve the same vector
+    new(vb.v + (vb.n++)) T{x};  // If this throws, have the same vector
                     // Don't increment n before you know the construction succeded
 }
 ``` 
@@ -130,7 +130,7 @@ void increaseCap() {
 }
 ```
 
-**Note:** only try blocks are in `uninitialized_copy` + `uninitialized_fill`.
+**Note:** only `try` blocks are in `uninitialized_copy` + `uninitialized_fill`.
 
 But we have an efficiency issue - copying from old array to the new one knowing that the old array is going to be destroyed. Moving would be better.
 - But moving destroys the old array, so if an exception is thrown during moving, our vector is destroyed
@@ -161,7 +161,7 @@ void uninitialized_copy_or_move(T *start, T *finish, T *target) {
 
 `std::move_if_noexcept(x)` produces `std::move(x)` if `x` has a non-throwing move constructor, produces `x` otherwise.
 
-But how should the compiler know if T's move constructor is non-throwing? You have to tell it:
+But how should the compiler know if `T`'s move constructor is non-throwing? You have to tell it:
 
 ```C++
 class C {
