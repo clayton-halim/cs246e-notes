@@ -34,7 +34,7 @@ void f() {
 }   // No cleanup necessary
 ```
 
-But sometimes you do need the heap. Calling delete isn't so bad, but consider:
+But sometimes you do need the heap. Calling `delete` isn't so bad, but consider:
 
 ```C++
 void f() {
@@ -57,9 +57,9 @@ If a program cannot recover from an expression without corrupting its memory, wh
 
 What constitues exception safety? 3 levels:
 1. **Basic guarantee** - once an exception has been handled, the program is in some valid state, no leaked memory, no corrupted data structures, all invariants are maintained.
-1. **Strong guarantee** - if an exception propogates out of a function `f`, then the state of the program will be as if `f` had not been called
+2. **Strong guarantee** - if an exception propogates out of a function `f`, then the state of the program will be as if `f` had not been called
     - `f` either succeeds completely or not at all.
-1. **Nothrow guarantee** - a function `f` offers the nothrow guarantee if `f` never emits an exceptions and _always_ accomplishes its purpose
+3. **Nothrow guarantee** - a function `f` offers the nothrow guarantee if `f` never emits an exceptions and _always_ accomplishes its purpose
 
 
 Will revist, but now coming back to `f`:
@@ -96,7 +96,8 @@ template<typename T> class unique_ptr {
             return q;
         }
 };
-
+```
+```C++
 void f() {
     unique_ptr<Posn> p {new Posn{1, 2}};
 
@@ -107,7 +108,7 @@ void f() {
 
 That's it! Less memory management effort than we started with!
 
-Using `unique_ptr` can use get to fetch the raw pointer.
+Using `unique_ptr` can use `get` to fetch the raw pointer.
 
 **Better** - make `unique_ptr` act like a pointer.
 
@@ -127,7 +128,7 @@ template<typename T> class unique_ptr {
         }
 
         void swap(unique_ptr<T> &x) {
-            std::swap(p, x.p);  // Even though p is private, we are still inside the unique_ptr class
+            std::swap(p, x.p);  // Even though p is private, we are still inside the unique_ptr class, so we can access other unique_ptr's private fields
         }
 };
 ```
@@ -189,8 +190,8 @@ f(unique_ptr<C> {new C;}, g());
 C++ does not enforce order of argument evaluation
 It could be:
 1. `new C`
-1. `g()`
-1. `unique_ptr<c> {1.}`
+2. `g()`
+3. `unique_ptr<c> {1.}`
 
 Then what if `g` throws? 1. is leaked.
 
