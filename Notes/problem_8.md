@@ -68,7 +68,8 @@ class list {
         iterator begin() {return iterator{theList};}
         iterator end() {return iterator{nullptr};}
 };
-
+```
+```C++
 list l;
 
 for (list::iterator it = l.begin(); it != l.end(); ++it) {
@@ -76,7 +77,7 @@ for (list::iterator it = l.begin(); it != l.end(); ++it) {
 }
 ```
 
-**Q:** Should list::begin and list::end be `const` methods?  
+**Q:** Should `list::begin` and `list::end` be `const` methods?  
 **Consider:**
 
 ```C++
