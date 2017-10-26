@@ -22,14 +22,14 @@ template<typename T> vector<T>::vector(): n{0}, cap{1}, theVector{new T[cap]} {}
 `T[cap]` creates an array of T objects, which `T` objects will be stored in the array?
 - C++ always calls a constructor when creating an object.
 - Which constructor gets called? The default constructor
-- But Posn doesn't have one
+- But `Posn` doesn't have one
 
 Need to separate memory allocation (Object creation step 1) from initialization (steps 2-4)
 
 **Allocation:** `void *operator new(size_t)`
 - Allocates `size_t` bytes
 - No initialization
-- Returns void*
+- Returns `void*`
 
 **Note:** 
 - In C, `void*` implicity converts to any pointer type
@@ -38,7 +38,7 @@ Need to separate memory allocation (Object creation step 1) from initialization 
 **Initialization:** "Placement new"
 - `new (address) type`
 - Constructs a "type" object at "address"
-- Does not allocate memory
+- Does not allocate memory (memory should already be allocated at "address")
 
 ```C++
 template<typename T> class vector {
