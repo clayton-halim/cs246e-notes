@@ -1,4 +1,4 @@
-[Abstraction over containers << ](./problem_17.md) | [**Home**](../README.md)
+[Abstraction over containers << ](./problem_17.md) | [**Home**](../README.md) | [>> I'm leaking!](./problem_19.md)
 
 # Problem 18 - Heterogenous Data
 **2017-10-19**
@@ -242,13 +242,13 @@ p
 
 But `p->isHeavy();` is still false!
 
-**Rules:** the choice of which isHeavy is based on the type of the pointer (static typeou want to ), not the object (dynamic type).
+**Rules:** the choice of which `isHeavy` is based on the type of the pointer (static type), not the object (dynamic type).
 
-Why? Because it's cheaper
+Why? Because it's cheaper.
 
 **C++ Design Principle:** If you don't use it, you shouldn't have to pay for it.
 
-That is if you want something more expensive, you have to ask for it. To make `*p` act like a comic when it is a comic:
+That is if you want something more expensive, you have to ask for it. To make `*p` act like a `Comic` when it is a `Comic`:
 
 ```C++
 class Book {
@@ -272,4 +272,109 @@ p->isHeavy();   // true!
 
 `override` is a contextual keyword, is only a keyword in that specific location.
 
+Now we can have a truly heterogeneous collection.
 
+```C++
+vector<Book*> library;
+library.push_back(new Book{...});
+library.push_back(new Comic{...});
+
+// Even better version
+vector<unique_ptr<Book>> library; 
+
+int howManyHeavy(const vector<Book*> &v) {
+    int count = 0;
+    for (auto &b: v) {
+        if (b->isHeavy()) ++count;
+    }
+
+    return count;
+}
+
+for (auto &b: library) delete b;    // Not necessary if library is a vector of unique_ptrs
+```
+
+Correct version of `isHeavy` is always chosen, even though we don't know what's in the vector, and the items are probably not the same type.
+
+This is called **polymorphism**.
+
+How do virtual methods "work" and why are they more expensive? (though not _significantly_ more expensive)
+- Implementation dependent, but the following is most common
+
+**Vtables** (only contain virutal methods)
+```C++
+(1)
++---------+
+| "Book"  |
++---------+
+| isHeavy | -> Book::isHeavy
++---------+
+
+(2)
++---------+
+| "Comic" |
++---------+
+| isHeavy | -> Comic::isHeavy
++---------+
+```
+
+So when we create two `Book`s `b1`, `b2`, and a `Comic b1`:
+
+```C++
+Book b1;
+
++--------+
+| vptr   | -> (1)
++--------+
+| Title  |
++--------+
+| Author |
++--------+
+| Length |
++--------+
+
+Book b2;
+
++--------+
+| vptr   | -> (1)
++--------+
+| Title  |
++--------+
+| Author |
++--------+
+| Length |
++--------+
+
+Comic b2;
+
++--------+
+| vptr   | -> (2)
++--------+
+| Title  |
++--------+
+| Author |
++--------+
+| Length |
++--------+
+```
+
+Non-virutal methods are just ordinary function calls.  
+If there is at least one virtual method:
+- Compiler creates a table of function pointers:
+    - One per class
+    - The vtable
+- Each object contains a pointer to its class' vtable 
+    - the `vptr`
+- Calling the virtual method => follow the `vptr` to the vtable, follow the function pointer to the correct function
+
+- `vptr` is often the "first" field
+    - So that a subclass object still looks like a superclass object
+    - So the program knows where the `vptr` is
+    - If there are no virtual methods, `vptr` does not exist
+
+So virtual methods incur a cost in
+- time (Extra pointer derefs)
+- space (Each object gets a `vptr`)
+
+---
+[Abstraction over containers << ](./problem_17.md) | [**Home**](../README.md) | [>> I'm leaking!](./problem_19.md)
