@@ -28,6 +28,7 @@ reading sections are referenced to this book.
 1. [I'm leaking!](Notes/problem_19.md)
 1. [I want a class with no objects](Notes/problem_20.md)
 1. [The copier is broken](Notes/problem_21.md)
+1. [I want to know what kind of Book I have](Notes/problem_22.md)
 
 ## Tutorials
 1. [Valgrind + GDB](Notes/tutorial_1.md)
