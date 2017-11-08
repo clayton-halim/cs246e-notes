@@ -366,7 +366,7 @@ If there is at least one virtual method:
 - Compiler creates a table of function pointers:
     - One per class
     - The vtable
-- Each object contains a pointer to its class's vtable 
+- Each object contains a pointer to its class' vtable 
     - the `vptr`
 - Calling the virtual method => follow the `vptr` to the vtable, follow the function pointer to the correct function
 
