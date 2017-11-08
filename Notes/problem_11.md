@@ -36,7 +36,7 @@ vector<int> w{5};   // 0, 0, 0, 0, 0
 vector<int> z{3, 4};    // 4, 4, 4
 ```
 
-**Notes:** `T{}` (default constructor) means 0 if T is a built-in type
+**Notes:** `T{}` (default constructor) means `0` if `T` is a built-in type
 
 Better - what about true array-style initialization?
 
