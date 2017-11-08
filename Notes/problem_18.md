@@ -64,7 +64,8 @@ class Book {    // Superclass or Base class
 
         // etc.
 };
-
+```
+```C++
 BOOK
 +--------+
 | Title  |
@@ -73,9 +74,9 @@ BOOK
 +--------+
 | Length |
 +--------+
-
-// Some books are special though
-
+```
+Some books are special though
+```C++
 class Text: public Book {   // Subclass or Derived class
         string topic;   // No need to mention title, etc. because it comes from book
     public:
@@ -86,7 +87,8 @@ class Text: public Book {   // Subclass or Derived class
         bool isHeavy() const { return length > 500; }
         string getTopic() const { return topic; }
 };
-
+```
+```C++
 TEXT
 +--------+
 | Title  |
@@ -97,7 +99,8 @@ TEXT
 +--------+
 | Topic  |
 +--------+
-
+```
+```C++
 class Comic: public Book {
         string hero;
     public:
@@ -108,7 +111,8 @@ class Comic: public Book {
         bool isHeavy() const { return length > 50; }
         string getHero() const { return hero; }
 };
-
+```
+```C++
 COMIC
 +--------+
 | Title  |
@@ -175,10 +179,9 @@ Book b = Comic{___, ___, 75, ___};
 
 // method calls:
 b.isHeavy();
-
-
 ``` 
-This is a light `Book`, but a heavy `Comic`. What does this return? -> Returns false
+
+This is a light `Book`, but a heavy `Comic`. What does this return? -> Returns `false`
 If `b` is a `Comic`, why is it acting like a `Book`? -> Because it is a `Book`!
 
 Consequence of stack-allocated objects:
@@ -196,8 +199,8 @@ Book b |    |  = Comic {...} |    |
                              +----+
 ```
 
-Keeps only the `Book` part - `Comic` part is chopped off - **slicing**
-- So it really is just a Book now
+Keeps only the `Book` part - `Comic` part is "chopped off" - **slicing**
+- So it really is just a `Book` now
 - Therefore it is `Book::isHeavy` that runs
 
 Slicing happens even if superclass & subclass are the same size.
@@ -208,7 +211,7 @@ Similarily, if you want to collect your books:
 vector<Book> library;
 library.push_back(Comic {...}); 
 ```
-only the book part will be pushed - _not_ a heterogeneous collection.
+only the `Book` part will be pushed - _not_ a heterogeneous collection.
 
 Also note:
 ```C++
@@ -218,7 +221,7 @@ f(comics);  // Will compile but never do this!
 ```
 
 - Array will be misaligned
-- Will not act like an array Books
+- Will not act like an array `Books`
 - Undefined behaviour!
 
 Slicing does not happen through pointers
@@ -299,7 +302,7 @@ Correct version of `isHeavy` is always chosen, even though we don't know what's 
 This is called **polymorphism**.
 
 How do virtual methods "work" and why are they more expensive? (though not _significantly_ more expensive)
-- Implementation dependent, but the following is most common
+- Implementation dependent, but the following is most common:
 
 **Vtables** (only contain virutal methods)
 ```C++
@@ -318,7 +321,7 @@ How do virtual methods "work" and why are they more expensive? (though not _sign
 +---------+
 ```
 
-So when we create two `Book`s `b1`, `b2`, and a `Comic b1`:
+So when we create two `Book`s `b1`, `b2`, and a `Comic b2`:
 
 ```C++
 Book b1;
