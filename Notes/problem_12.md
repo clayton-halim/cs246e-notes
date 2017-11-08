@@ -19,7 +19,7 @@ Take a look at Vector's constructor:
 ```C++
 template<typename T> vector<T>::vector(): n{0}, cap{1}, theVector{new T[cap]} {}
 ```
-`T[cap]` creates an array of T objects, which `T` objects will be stored in the array?
+`T[cap]` creates an array of T objects. Which `T` objects will be stored in the array?
 - C++ always calls a constructor when creating an object.
 - Which constructor gets called? The default constructor
 - But `Posn` doesn't have one
