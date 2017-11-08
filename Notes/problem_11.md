@@ -53,7 +53,8 @@ template <typename T> class vector {
                 for (auto &t: init) theVector[i++] = t;
             }
 };
-
+```
+```C++
 vector<int> v {1, 2, 3, 4, 5};  // 1, 2, 3, 4, 5
 vector<int> v;  // Empty
 vector<int> v{5};   // 5
