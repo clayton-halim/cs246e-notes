@@ -34,7 +34,7 @@ void f() {
 }   // No cleanup necessary
 ```
 
-But sometimes you do need the heap. Calling delete isn't so bad, but consider:
+But sometimes you do need the heap. Calling `delete` isn't so bad, but consider:
 
 ```C++
 void f() {
@@ -96,7 +96,8 @@ template<typename T> class unique_ptr {
             return q;
         }
 };
-
+```
+```C++
 void f() {
     unique_ptr<Posn> p {new Posn{1, 2}};
 
@@ -107,7 +108,7 @@ void f() {
 
 That's it! Less memory management effort than we started with!
 
-Using `unique_ptr` can use get to fetch the raw pointer.
+Using `unique_ptr` can use `get` to fetch the raw pointer.
 
 **Better** - make `unique_ptr` act like a pointer.
 
@@ -127,7 +128,7 @@ template<typename T> class unique_ptr {
         }
 
         void swap(unique_ptr<T> &x) {
-            std::swap(p, x.p);  // Even though p is private, we are still inside the unique_ptr class
+            std::swap(p, x.p);  // Even though p is private, we are still inside the unique_ptr class, so we can access other unique_ptr's private fields
         }
 };
 ```
