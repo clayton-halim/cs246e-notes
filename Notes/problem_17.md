@@ -57,8 +57,8 @@ Ok, but:
 Make the types stand for the iterators, not the container elements. But then how do we indicate the type for `f`?
 
 ```C++
-template<typename InInter, typename OutIter, typename Fn>
-void transform(InInter start, InInter finish, OutIter target, Fn f) {
+template<typename InIter, typename OutIter, typename Fn>
+void transform(InIter start, InIter finish, OutIter target, Fn f) {
     while (start != finish) {
         *target = f(*start);
         ++start;
