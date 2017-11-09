@@ -337,6 +337,206 @@ If you need true shared ownership - we'll see later.
                 - Pre/post conditions
                 - Respect invariants
             - "Hooks" for customizations by subclasses, overriding code could be anything
+        - All virtual methods should be private
+        - All public methods should be non-virtual
+        - Ex. Non-NVI class
+            ```C++
+            class DigitalMedia {
+                public:
+                    virtual void play() = 0;
+            };
+            ```
+        - Now with NVI
+            ```C++
+            class DigitalMedia {
+                public:
+                    void play() {
+                        doPlay();
+                    }
+                private:
+                    virtual void doPlay() = 0;
+            };
+            ```
+            - In the future, can add before/after code
+                - Ex. call `checkCopyright()` before, call `updatePlayCount()` afterwards
+        - Generalizes the Template Method Pattern
+        - Puts every virtual method function inside a template method
+- **Interface Segregation Principle**
+    - Many small interfaces is better than one large interface
+    - If a class has many functionalities, each client of the class should only see the functionality that it needs
+    - Ex. Video Game (will ignore NVI to keep example short)
+        ```C++
+        class Enemy {
+            public:
+                virtual void strike();  // Needed by game logic
+                virtual void draw();    // Needed by UI'
+        };
+        ``` 
+        ```C++
+        class UI {
+            vector<Enemy *> v;
+        };
+        ```
+        ```C++
+        class Battlefield {
+            vector<Enemy *> v;
+        };  
+        ```
+        - If we need to change the drawing interface, `Battlefield` must recompile for no reason
+        - Creates needless coupling between `UI` and `Battlefield`
+        - One solution: **Multiple Inheritance**
+        ```C++
+        class Enemy: public Draw, public Combat {};
+        ```
+        ```C++
+        class Draw {
+            public:
+                virtual void draw() = 0;
+        };
+        ```
+        ```C++
+        class UI {
+            vector<Draw *> v;
+        };
+        ```
+        ```C++
+        class Combat {
+            public:
+                virtual void strike() = 0;
+        }
+        ```
+        ```C++
+        class Battlefield {
+            vector<Combat *> v;
+        }
+        ```
+        - Example of the **Adapter Pattern**
+    - General use of the Adapter Pattern: when a class provides an interface different from the one you need
+    - Ex.
+        ```
+        +------------------+        +----------------+
+        | Needed Interface |        | Provided Class |
+        +------------------+        +----------------+
+        |+ g()             |        |+ f()           |
+        +------------------+        +----------------+
+                 ^                          ^   
+                 |                          |   // This inheritanc couole be private, 
+                 +-------------+------------+   // depends on whether you want the adapter 
+                               |                // to still support the old interfacec
+                           +---------+
+                           | Adapter |
+                           +---------+    +----------+
+                           |+ g() ---|----| { f(); } |  // Show's implementation
+                           +---------+    +----------+
+        ```
+    - _Detour:_ Issues with multiple inheritance
+        ```
+        +------+        +------+    
+        |  A1  |        |  A2  |
+        +------+        +------+
+        |+ a() |        |+ a() |
+        +------+        +------+
+            ^               ^
+            |               |
+            +-------+-------+
+                    |
+                 +-----+
+                 |  B  |    // Has 2 a() methods
+                 +-----+
+        ```
+        ```
+                 +-----+
+                 |  A  |
+                 +-----+
+                 |+ a()|
+                 +-----+
+                    ^
+                    |
+           +--------+--------+
+           |                 |
+        +-----+           +-----+           
+        |  B  |           |  C  |
+        +-----+           +-----+
+           |                 |
+           +--------+--------+
+                    |
+                 +-----+        
+                 |  D  |    // Has two a() methods, and they're different
+                 +-----+        
+        ```
+        ```C++
+        class D: public B, public C {
+            void f() { ... a() ... }  // Ambiguous, use B::a() or C::a()
+        };
+        D d;    
+        d.a();  // Ambiguous, use d.B::a() or d.C::a()
+        ```
+    - OR maybe there should be only one `A` base, and therefore only one `a()`
+        ```C++
+        class B: virtual public A { ... };
+        class C: virtual public A { ... };
+        ```
+    - Now `d.a()` is no longer ambiguous
+    - Ex. iostream hiearchy
+    ```
+                            ios_base
+                               |
+                               |
+                       .------ios-----.
+                      /                \
+                     /                  \
+                    /                    \
+                   /                      \
+               istream                  ostream----ofstream
+              /       \                   /    \ 
+             /         \                 /      ostringstream
+            /           \              iostream
+           /             \                |    \
+          /               \               |     \
+         /                 \              |      \
+     ifstream       iostringstream      fstream  stringstream    
+    ```
+    - _Problem:_ How will a class like `D` be laid out in memory (implementation specific)
+        - Consider:
+        ```C++
+        +----------+    <-- Should look like an A*, B*, C*, D*
+        |   vptr   |      
+        +----------+
+        | A fields |
+        +----------+
+        | B fields |
+        +----------+
+        | C fields |
+        +----------+
+        | D fields |
+        +----------+          
+        ```
+    - What does `g++` do?
+        ```C++
+        +----------+
+        |   vptr   |
+        +----------+
+        | B fields |
+        +----------+
+        |   vptr   |
+        +----------+
+        | C fields |
+        +----------+
+        |   vptr   |
+        +----------+
+        | D fields |
+        +----------+
+        |   vptr   |
+        +----------+
+        | A fields |
+        +----------+
+        ```
+
+
+
+
+
+
 
 
 
