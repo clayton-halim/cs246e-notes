@@ -420,9 +420,9 @@ If you need true shared ownership - we'll see later.
         |+ g()             |        |+ f()           |
         +------------------+        +----------------+
                  ^                          ^   
-                 |                          |   // This inheritanc couole be private, 
+                 |                          |   // This inheritance could be private, 
                  +-------------+------------+   // depends on whether you want the adapter 
-                               |                // to still support the old interfacec
+                               |                // to still support the old interface
                            +---------+
                            | Adapter |
                            +---------+    +----------+
