@@ -25,7 +25,7 @@
                                            |
                                            | - (is-a relationship: inheritance)
                                            |
-                   ------------------------+---------------------------
+                   +-----------------------+--------------------------+
                    |                                                  |
         +---------------------+                             +---------------------+
         |Text                 |                             |Comic                | 
@@ -143,13 +143,16 @@ If you need true shared ownership - we'll see later.
     - Classes/modules/functions/etc. should be open for extension + closed for modification
     - Changes in a program's behaviour should happen by writing new code, not by changing old code
     - Ex.
+
         ```
         +-----------+     +---------+
         | Carpenter |◆--->| Handsaw |
         +-----------+     +---------+
+
         ```
         - What if a carpenter buys a table saw
         - This design is not open for extension (must change carpenter code)
+
         ```
         +-----------+     +-----+
         | Carpenter |◆--->| Saw |
@@ -161,6 +164,7 @@ If you need true shared ownership - we'll see later.
                +---------+        +-----------+
                | Handsaw |        | Table Saw |
                +---------+        +-----------+
+               
         ```
     - Also note: `countHeavy` function:
         ```C++
@@ -238,7 +242,7 @@ If you need true shared ownership - we'll see later.
                             Rectangle::setWidth(l);
                             // length == width in a square
                         }
-                        void setWidth(int w) { ... } // Simiar
+                        void setWidth(int w) { ... } // Similar
                 };
                 ```
                 ```C++
@@ -309,7 +313,7 @@ If you need true shared ownership - we'll see later.
             class Turtle {
                 public:
                     void draw() {
-                        drawHead()
+                        drawHead();
                         drawShell();
                         drawFeet();
                     }
@@ -413,6 +417,7 @@ If you need true shared ownership - we'll see later.
         - Example of the **Adapter Pattern**
     - General use of the Adapter Pattern: when a class provides an interface different from the one you need
     - Ex.
+
         ```
         +------------------+        +----------------+
         | Needed Interface |        | Provided Class |
@@ -428,8 +433,10 @@ If you need true shared ownership - we'll see later.
                            +---------+    +----------+
                            |+ g() ---|----| { f(); } |  // Show's implementation
                            +---------+    +----------+
+
         ```
     - _Detour:_ Issues with multiple inheritance
+
         ```
         +------+        +------+    
         |  A1  |        |  A2  |
@@ -444,6 +451,7 @@ If you need true shared ownership - we'll see later.
                  |  B  |    // Has 2 a() methods
                  +-----+
         ```
+
         ```
                  +-----+
                  |  A  |
@@ -478,7 +486,8 @@ If you need true shared ownership - we'll see later.
         ```
     - Now `d.a()` is no longer ambiguous
     - Ex. iostream hiearchy
-    ```
+
+        ```
                             ios_base
                                |
                                |
@@ -487,15 +496,15 @@ If you need true shared ownership - we'll see later.
                      /                  \
                     /                    \
                    /                      \
-               istream                  ostream----ofstream
-              /       \                   /    \ 
-             /         \                 /      ostringstream
+               istream -------------.    ostream----ofstream
+              /       \              \    /    \ 
+             /         \              \  /      ostringstream
             /           \              iostream
            /             \                |    \
           /               \               |     \
          /                 \              |      \
      ifstream       iostringstream      fstream  stringstream    
-    ```
+         ```
     - _Problem:_ How will a class like `D` be laid out in memory (implementation specific)
         - Consider:
         ```C++
@@ -531,14 +540,445 @@ If you need true shared ownership - we'll see later.
         | A fields |
         +----------+
         ```
+    - `B` and `C` need to be laid out so that we can find the `A` partm but the distance is not known (depends on the runtime of the object)
+    - _Solution:_ location of the base object stored in vtable
+        - Also note the diagram doesn't simultaneously look like `A`, `B`, `C`, `D`, but slices of it do
+        - Therefore pointer assignment among `A`, `B`, `C`, `D` pointers may change the address stored in the pointer
+        ```C++
+        D *d = ___;
+        A *a = d;   // Changes the address
+        ```
+        - `static_cast`, `const_cast`, `dynamic_cast`, under multiple inheritance will also adjust the value of the pointer (`reinterpret_cast` will not)
+- **Dependency Inversion Principle**
+    - High level modules should not depend on low-level modules. Both should depend on abstractions
+    - Abstract classes should never depend on concrete classes
+    - Traditional top-down design
+        - High level modules _uses_ low level module
+        - Ex. `Word count` _uses_ `keyboard reader`
+        - What if I want to use a file reader?
+        - Changes to details affect the higher level word count module
+        - Dependency inversion
+        <pre>
+        +-------------------+   +--------------------------------+
+        | High Level Module |-->|      <em>Low Level Abstraction</em>     | 
+        + ------------------+   +--------------------------------+
+                                                ^
+                                                |
+                                        +-------------------+
+                                        | Low Level Modules |
+                                        +-------------------+
+        +------------------+         +--------------------+
+        |    WordCount     |-------->|  <em>Input Interface</em>   |
+        +------------------+         +--------------------+
+                                                ^
+                                                |
+                                         +------+------+
+                                         |             |
+                                +------------+      +----------+
+                                |  Keyboard  |      |   File   |
+                                |   Reader   |      |  Reader  |
+                                +------------+      +----------+
+        </pre>
+        - Ex.
+            ``` 
+            +-------+    +-----------+
+            | Timer |◇-->| Bell      |
+            +-------+    +-----------+
+                         |+ notify() |
+                         +-----------+
+            ```
+            - When the timer hits some specified time, it rings the `Bell` (calls `Bell:notify`, which rings the bell)
+            - What if we want to trigger other events? Maybe more than one:
+            <pre>
+            +-------+  * +-----------+
+            | Timer |◇-->| <em>Responder</em> |
+            +-------+    +-----------+
+                         |+ notify() |
+                         +-----------+
+                               ^
+                               |
+                        +------+-------+
+                        |              |
+                  +-----------+   +-----------+     
+                  | Bell      |   | Lights    |     
+                  +-----------+   +-----------+     
+                  |+ notify() |   |+ notify() |     
+                  +-----------+   +-----------+
+            </pre>
+            - Maybe we want a dynamic set of responders
+            <pre>
+            +-----------------------+        *
+            | Timer                 |◇--------->+-----------+
+            +-----------------------+           | <em>Responder</em> |
+            |+ register(Responder)  |&lt;---------◇+-----------+
+            |+ unregister(Resonder) |           |+ notify() |
+            +-----------------------+           +-----------+
+                                                       ^    
+                                                       |      
+                                                +------+-------+
+                                                |              |
+                                          +-----------+   +-----------+
+                                          | Bell      |   | Lights    |
+                                          +-----------+   +-----------+
+                                          |+ notify() |   |+ notify() |
+                                          +-----------+   +-----------+
+            </pre>
+            - Now _`Responder`_ is depending on the concrete `Timer` class: apply Dependency Inversion again
+            <pre>
+            +------------------------+      +-----------------+ 
+            | <em>Source</em>                 |⬦---->| <em>Responder</em>       |
+            +------------------------+      +-----------------+ 
+            |+ register(Responder)   |      |+ notify()       |
+            |+ unregister(Responder) |      +-----------------+
+            +------------------------+               ^
+                    ^                     +----------+
+                    |                     |          |
+                +-------+             +------+     +-------+
+                | Timer |&lt;-----------⬦| Bell |     | Light |
+                +-------+             +------+     +-------+
+                    ^                                   ⬦
+                    |                                   |
+                    +-----------------------------------+
+           
+            </pre>
+            - Could dependency invert this again if you wanted
+            - **General Solution:** known as the Observer Pattern
+            <pre>
+            +-----------------+             +-----------------+ 
+            | <em>Subject</em>         |⬦----------->| <em>Observer</em>        |
+            +-----------------+             +-----------------+ 
+            |+ notifyObservers|             |+ notify()       |
+            |+ attatch(Obs)   |             +-----------------+ 
+            |+ detatch(Obs)   |                      ^
+            +----------------+                       |
+                    ^                                |
+                    |                                |
+            +-----------------+             +-------------------+
+            | ConcreteSubject |&lt;-----------⬦| Concrete Observer |
+            +-----------------+             +-------------------+
+            |+ getState()     |             |+ notify()         |
+            +-----------------+             +-------------------+
+            </pre>
+            - Sequence of calls:
+                1. `Subject`'s state changes
+                1. `Subject::notifyObservers` (either by the `Subject` itself OR by some external controller)
+                    - Calls each `Observer`'s `notify` 
+                1. Each `Observer` calls `concreteSubject::getState` to query the state + react accordingly
 
+## Some More Design Patterns
 
+### Factory Method Pattern
 
+When you don't know exactly what kind of object you want, and your preferences may vary
+- Also called the **Virtual Constructor Pattern**
+- Strategy pattern applied to object construction
 
+Ex. 
+<pre>
+                +-------+
+                | <em>Enemy</em> |
+                +-------+
+                    ^
+                    |
+         +----------+------------+
+         |                       |
+     +--------+             +--------+
+     | Turtle |             | Bullet |
+     +--------+             +--------+
 
+                +-------+
+                | <em>Level</em> |
+                +-------+
+                    ^
+                    |
+         +----------+------------+
+         |                       |
+      +------+               +------+
+      | Easy |               | Hard |
+      +------+               +------+    
+</pre>
 
+- Randomly generated
+- More turtles in easy levels
+- More bullets in hard levels
 
+```C++
+class Level {
+    public:
+        virtual Enemy *getEnemy() = 0;
+};
+```
 
+```C++
+class Easy: public Level {
+    public:
+        Enemy *getEnemy() override {
+            // mostly turtles
+        }
+};
+```
 
+```C++
+class Hard: public Level {
+    public:
+        Enemy *getEnemy() override {
+            // mostly bullets
+        }
+};
+```
 
+```C++
+Level *l = new Easy;
+Enemy *e = l->getEnemy();
+```
 
+### Decorator Pattern
+Add/remove functionality to/from objects at runtime
+
+Ex. add menus/scrollbars to windows - either or both without a combinatorial explosion of subclasses
+
+<pre>
+                      +-----------+
+                      | <em>Component</em> |<------------+
+                      +-----------+             |
+                            ^                   |
+                            |                   |
+          +----------------------------+        |
+          |                            |        |
+          | // Plain window            |        |
+    +--------------------+       +-----------+  |
+    | Concrete Component |       | <em>Decorator</em> |◇-+
+    +--------------------+       +-----------+
+    |+ operation         |             ^
+    +--------------------+             |
+                                       +------------------------------------+
+                                       |                                    |
+                            +----------------------+            +----------------------+
+// (Window w/ scrollbar)    | Concrete Decarator A |            | Concrete Decarator B | // Window w/ menu
+                            +----------------------+            +----------------------+
+                            | operation            |            | operation            |
+                            +----------------------+            +----------------------+
+</pre>
+
+Every `Decorator` IS a component AND HAS a `Component`
+- `Window w/ scrollbar` is a kind of window, _and_ has a pointer to the underlying plain window
+- `Window w/ scrollbar + menu` is a window and has a pointer to a `window w/ scrollbar`, which has a pointer to a `plain window`  
+
+Ex.
+
+```C++
+WindowInterface *w = new WindowWithMenu{
+                            new WindowWithScollBar{
+                                new Window{}}};
+```
+
+### Vistor Pattern
+
+For implementing _double dispatch_
+- Method chosen based on the runtime types of 2 objects, not just one
+
+```C++
+class Enemy {
+    public:
+    virtual void beStruckBy(Weapon &w) = 0;
+};
+
+class Turtle: public Enemy {
+    public:
+    void beStruckBy(Weapon &w) override {w.strike(*this);}
+};
+
+class Bullet: public Enemy {
+    public:
+    void beStruckBy(Weapon &w) override {w.strike(*this);}
+};
+
+class Weapon {
+    public:
+    virtual void strike(Turtle &t) = 0;
+    virtual void strike(Bullet &b) = 0;
+};
+
+class Stick: public Weapon {
+    public:
+    void strike(Turtle &t) override {
+        //strike turtle with stick
+    }
+
+    void strike(Bullet &b) override {
+        //strike bullet with stick
+    }
+}
+```
+
+```C++
+Enemy *e = new Bullet{...};
+Weapon *w = new Rock{...};
+e->beStruckBy(*w); 
+```
+
+What happens?
+- `Bullet::beStruckBy` runs (virtual method dispatch)
+- Which calls `Weapon::strike(Bullet &b)` since `*this` is a Bullet
+- This fact is known at compile time, overload resolution
+- Virtual method resolves to `Rock::Strike(Bullet &)`
+
+Visitor can also be used to add functionality to a class hierarchy without adding new virtual methods.
+
+Add a visitor to the book hierarchy:
+```C++
+class Book {
+    ...
+    public:
+    ...
+    virtual void accept(BookVisitor &v) {v.visit(*this);}
+};
+
+class Text: public Book {
+    ...
+    public:
+    void accept(BookVisitor &v) override {
+        v.visit(*this);
+    }
+};
+
+class BookVisitor {
+    public:
+    virtual void visit(Book &b) = 0;
+    virtual void visit(Text &t) = 0;
+    virtual void visit(Comic &c) = 0;
+};
+```
+
+Example: Categorize and Count.
+- For `Book`s: - by Author
+- `Text`s: - by Topic
+- `Comic`s: - by Hero
+
+Could do this with a virtual method, or write a visitor.
+```c++
+class Catalog: public BookVisitor {
+    public:
+    map<string, int> theCat;
+    void visit(Book &b) override {++theCat[b.getAuthor()];}
+    void visit(Text &t) override {++theCat[b.getTopic()];}
+    void visit(Comic &c) override {++theCat[c.getHero()];}
+};
+```
+
+### But it won't compile!
+- Circular include dependency
+- _book.h_, _BookVisitor.h_ include each other.
+- include guard prevents multiple inclusion
+- whichever ends up occurring first will refer to things not yet defined.
+- needless includes create artificial compilation dependencies, and slow down compilation, or prevent compilation altogether.
+
+Sometimes a forward class declaration is not good enough.
+
+Consider:
+```c++
+class A {...}; // A.h
+
+class B {
+    A a;
+};
+
+class C {
+    A *a;
+};
+
+class D: public A {
+    ...
+};
+
+class E {
+    A f(A);
+};
+
+class F {
+    A f(A a) {a. someMethod();}
+};
+
+class G {
+    t<A> x;
+};
+```
+Which need includes? `B`,`D`,`F` need includes
+
+`C`,`E` forward declare ok.
+
+`G` - it depends on how the template t uses A.
+- should collapse to one of the other cases.
+
+Note: class `F` only needs an include because method `f`'s implementation is present.
+- a good resason to keep implementation in .cc
+- where possible: forward declare in .h, include in .cc
+
+Also notice: `B` needs an include; `C` does not.
+- If we want to break the compilation dependency of `B` on `A`, we could make `B` like `C`.
+
+More generally:
+```C++
+class A1{}; class A2{}; class A3{};
+
+class B {
+    A1 a1;
+    A2 a2;
+    A3 a3;
+};
+```
+
+_b.h:_
+```C++
+class BImpl;
+
+class B {
+    unique_ptr<BImpl> pImpl;
+};
+```
+
+_bimpl.h:_
+```C++
+#include "a1.h"
+...
+
+struct BImpl {
+    A1 a1;
+    A2 a2;
+    A3 a3;
+};
+```
+
+_b.cc:_
+```C++
+#include "b.h"
+#include "bimpl.h"
+
+methods reference pImpl -> a1, a2, a3
+```
+
+_b.h_ no longer compilation-dependent on _a1.h_, etc.
+- called the pImpl idiom
+
+Another advantage of pImpl - pointers have a non-throwing swap.
+
+Can provide the strong guarantee on a B method by
+- Copying the Impl into a new BImpl structure (heap-allocated)
+- Method modifies the copy
+- If anything throws, discard the new structure (easy and automatic with `unique_ptr`s)
+- If all succeeds swap impl structs (pointer swap - `nothrow`)
+- Previous impl automcatically destroyed by the smart pointer.
+
+Example:
+```C++
+class B {
+    unique_ptr<BImpl> pImpl;
+    ...
+    void f() {
+        auto temp = make_unique<BImpl>(*pImpl);
+        temp->doSomething();
+        temp->doSomethingElse();
+        std::swap(pImpl,temp); // nothrow
+    } // strong guarantee
+};
+```
