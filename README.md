@@ -29,7 +29,15 @@ reading sections are referenced to this book.
 1. [I want a class with no objects](Notes/problem_20.md)
 1. [The copier is broken](Notes/problem_21.md)
 1. [I want to know what kind of Book I have](Notes/problem_22.md)
-1. [A Big Unit on Object Oriented Design](Notes/object_oriented_design.md)
+- [A Big Unit on Object Oriented Design](Notes/object_oriented_design.md)
+1. [Shared Ownership](Notes/problem_23.md)
+1. [Abstraction over Iterators](Notes/problem_24.md)
+1. [I want an ever faster vector](Notes/problem_25.md)
+1. [Collecting Stats](Notes/problem_26.md)
+1. [Resolving Method Overrides at Compile Time](Notes/problem_27.md)
+1. [Polymorphic Cloning](Notes/problem_28.md)
+1. [Logging](Notes/problem_29.md)
+1. [Total Control](Notes/problem_30.md)
 
 ## Other
 1. [Valgrind + GDB](Notes/tutorial_1.md)

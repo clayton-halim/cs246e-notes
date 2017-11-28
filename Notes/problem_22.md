@@ -1,4 +1,4 @@
-[The copier is broken << ](./problem_20.md) | [**Home**](../README.md)
+[The copier is broken << ](./problem_21.md) | [**Home**](../README.md) | [>> A big unit on Object Oriented Design](./object_oriented_design.md)
 
 # Problem 22: I want to know what kind of Book I have
 **2017-10-31** (happy halloween!) 
@@ -93,5 +93,5 @@ The `C++` casting operators - _4 operators_
         }
         ```
 ---
-[The copier is broken << ](./problem_20.md) | [**Home**](../README.md) 
+[The copier is broken << ](./problem_21.md) | [**Home**](../README.md) | [>> A big unit on Object Oriented Design](./object_oriented_design.md)
 

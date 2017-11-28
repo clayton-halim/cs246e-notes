@@ -1,4 +1,4 @@
-[I want to know what kind of Book I have << ](./problem_22.md) | [**Home**](../README.md)
+[I want to know what kind of Book I have << ](./problem_22.md) | [**Home**](../README.md) | [>> Shared Ownership](./problem_23.md)
 
 # A Big Unit on Object Oriented Design
 **2017-11-02**
@@ -982,3 +982,6 @@ class B {
     } // strong guarantee
 };
 ```
+
+---
+[I want to know what kind of Book I have << ](./problem_22.md) | [**Home**](../README.md) | [>> Shared Ownership](./problem_23.md)
