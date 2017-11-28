@@ -1,4 +1,4 @@
-[I want a class with no objects << ](./problem_20.md) | [**Home**](../README.md) | [>> I want to know what kind of Book I have](./problem_22)
+[I want a class with no objects << ](./problem_20.md) | [**Home**](../README.md) | [>> I want to know what kind of Book I have](./problem_22.md)
 
 # Problem 21 - The copier is broken
 
@@ -109,4 +109,4 @@ Now `*b1 = *b2` won't compile.
 Basically saying, before you assign something, understand what you're assigning and do it directly rather than through your superclass.
 
 ---
-[I want a class with no objects << ](./problem_20.md) | [**Home**](../README.md) | [>> I want to know what kind of Book I have](./problem_22)
+[I want a class with no objects << ](./problem_20.md) | [**Home**](../README.md) | [>> I want to know what kind of Book I have](./problem_22.md)
