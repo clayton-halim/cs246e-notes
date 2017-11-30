@@ -38,6 +38,8 @@ reading sections are referenced to this book.
 1. [Polymorphic Cloning](Notes/problem_28.md)
 1. [Logging](Notes/problem_29.md)
 1. [Total Control](Notes/problem_30.md)
+1. [I want total control over vectors and lists](Notes/problem_31.md)
+1. [A fixed-size allocator](Notes/Problem_32.md)
 
 ## Other
 1. [Valgrind + GDB](Notes/tutorial_1.md)

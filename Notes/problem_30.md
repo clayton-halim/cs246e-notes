@@ -1,4 +1,4 @@
-[<< Logging](./problem_30.md) | [**Home**](../README.md)
+[<< Logging](./problem_29.md) | [**Home**](../README.md) | [>> I want total control over vectors and lists](./problem_31.md) 
 
 # Problem 30: Total Control
 **2017-11-28**
@@ -159,5 +159,7 @@ Memory allocators are tricky to write, so we have 2 questions:
     delete q;   // Ordinary operator delete
     ```
 
+Customizing array allocation - overload `operator new[]` and `operator delete[]`.
+
 ---
-[<< Logging](./problem_30.md) | [**Home**](../README.md)
+[<< Logging](./problem_29.md) | [**Home**](../README.md) | [>> I want total control over vectors and lists](./problem_31.md) 
