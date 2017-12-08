@@ -183,6 +183,8 @@ Work in progress (feel free to contribute)!
 ### S
 - Separate Compilation
     - [1](Notes/problem_1.md)
+- SFINAE (Substitution Failure Is Not An Error)
+    - [25](Notes/problem_25.md)
 - Single Responsiblity Principle
     - [A Big Unit on OO Design](Notes/object_oriented_design.md)
 - SOLID Principles of OO Design
