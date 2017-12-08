@@ -181,7 +181,7 @@ We now have enough machinery to implement `std::move` and `std::forward`.
 
 _`std::move`_ - first attempt
 ```C++
-template<typename T> T &&move(T && x) {
+template<typename T> T &&move(T & x) {
     return static_cast<T &&>(x);
 }
 ```
