@@ -89,10 +89,10 @@ template <typename T> class shared_ptr {
 ```
 
 - `refcount` counts how many `shared_ptr`s point at `*p`.
-- Updated each time a shared_ptr is initialized/assigned/destroyed
+- Updated each time a `shared_ptr` is initialized/assigned/destroyed
 - `refcount` is shared among all shared pointers that point to `*p`
 
-- `p` is only deleted if its refcount reaches 0
+- `p` is only deleted if its `refcount` reaches `0`
 - implementation details - left to you
 
 ```C++ 
@@ -115,7 +115,7 @@ Just watch: cycles
      +---------------------+
 ```
 
-If you have cyclic data, you may have to physically vreak the cycle (or use `weak_ptrs`)
+If you have cyclic data, you may have to physically break the cycle (or use `weak_ptrs`)
 
 Also watch:
 
