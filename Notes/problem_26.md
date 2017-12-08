@@ -73,7 +73,7 @@ Why is `Count` a template?
 - So that for each class `C`, `class C: Count<C>` creates a new unique, instantiation of `Count` for each `C`. This gives `C` its own counter vs. sharing one counter over all subclasses
 
 This technique (inheriting from a template specialized by yourself)
-- Looks weird, but happens enough to have its ow name: **The Curiously Recurring Template Pattern (CRTP)**
+- Looks weird, but happens enough to have its own name: **The Curiously Recurring Template Pattern (CRTP)**
 
 ---
 [<< I want an even faster vector](./problem_25.md) | [**Home**](../README.md) | [>> Resolving Method Overrides at Compile-Time](./problem_27.md)
