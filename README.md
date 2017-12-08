@@ -2,7 +2,7 @@
 
 _Course information at the bottom of the page._
 
-These notes cover CS 246e in Fall 2017, the first offering of the course. The textbook used is [The C++ Programming Language](http://www.stroustrup.com/4th.html),
+These notes cover CS 246E in Fall 2017, the first offering of the course. The textbook used is [The C++ Programming Language](http://www.stroustrup.com/4th.html),
 reading sections are referenced to this book. 
 
 ## Table of Contents
