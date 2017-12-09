@@ -1,6 +1,6 @@
 [<< A fixed-size object allocator](./problem_32.md) | [**Home**](../README.md)
 
-Problem 33: I want a (tiny bit) smaller vector class
+# Problem 33: I want a (tiny bit) smaller vector class
 **2017-11-30** Last class :'(
 
 **Currently:** `vector`/`vector_base` have an allocator field. Standard allocator is stateless (has no fields)
