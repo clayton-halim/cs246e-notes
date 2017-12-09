@@ -34,7 +34,7 @@ struct Node {  // Vector: exercise
     Node *next;
     ...
     Node (const Node &other): 
-        data{other.data}, next{other.next ? new Node{*other.next} : nullptr} {  // Account for dereferencing a nullptr
+        data{other.data}, next{other.next ? new Node{*(other.next)} : nullptr} {  // Account for dereferencing a nullptr
             ...
         }
 };
@@ -55,7 +55,7 @@ w = v;  // Copy, but not a construction
 struct Node {
     Node &operator=(const Node &other) {
         data = other.data;
-        next = other.next ? new Node{*other.next} : nullptr;
+        next = other.next ? new Node{*(other.next)} : nullptr;
 
         return *this;
     }
