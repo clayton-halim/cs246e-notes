@@ -177,10 +177,10 @@ In summary: Rule of 5 (Big 5)
 
 - If you need to customize any one of
 1. Copy constructor
-2. Copy assignment
-3. Destructor
-4. Move constructor
-5. Move assignment
+1. Copy assignment
+1. Destructor
+1. Move constructor
+1. Move assignment
 
 then you usually need to customize all 5.
 
