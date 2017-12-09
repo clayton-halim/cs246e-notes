@@ -50,7 +50,7 @@ int main() {
 ```
 
 - **Semantics:**
-    - The first time the compile encounters `Vector<int>`, it creates a version of the vector code where `int` replaces `T` and compiles that new class
+    - The first time the compile encounters `Vector<T>`, it creates a version of the vector code where `int` replaces `T` and compiles that new class
     - Can't do that unless it has all the details about the class
     - So implementation must be available in `.h`
     - Can also write bodies inline
