@@ -39,7 +39,7 @@ void push_back(T x) {
 
 If `T` doesn't have a move constructor: 2 copies
 
-**Better:** take T by reference
+**Better:** take `T` by reference
 ```C++
 void push_back(const T &x) {    // No copy, no move
     increaseCap();
@@ -93,16 +93,16 @@ swap(x, y)  // Equiv swap<int>(x, y);
 
 Don't have to say `swap<int>`, C++ can deduce this from the types of `x` and `y`
 
-In general, only have to say `f<T>(...)` if T cannot be deduced from the args
+In general, only have to say `f<T>(...)` if `T` cannot be deduced from the args
 
 Type deduction for template args follows the same rules as type deduction for `auto`
 
 ### Back to Vector passing constructor args
 
 - We don't know what types constructor args should have
-- T could be any class, could have several constructors
+- `T` could be any class, could have several constructors
 
-Idea - member template function (like swap, it could take anything)
+Idea - member template function (like `swap`, it could take anything)
 
 **2nd Problem:** how many constructor args?
 
@@ -120,11 +120,11 @@ template<typename T> class vector {
 };
 ```
 
-In this case, ... in template actually represents a variable amount of arguments
+In this case, `...` in template actually represents a variable amount of arguments
 
 
-Args is a _sequence_ of type vars denoting the type of the actual args of `emplace_back`  
-args is a _sequence_ of program vars denoting the actual args of `emplace_back`
+`Args` is a _sequence_ of type vars denoting the type of the actual args of `emplace_back`  
+`args` is a _sequence_ of program vars denoting the actual args of `emplace_back`
 
 ```C++
 vector<Posn> v;
@@ -149,7 +149,7 @@ Ex.
 template<typename T> class c {
     public:
         template<typename U> void g(U&& x); // Universal
-        template<typename U> void h(const U&& x);   // Not universal
+        template<typename U> void h(const U&& x);   // Not universal (because of const)
         void j(T&& x);  // Not universal (not being deduced, T is already known)
 };
 ```
@@ -171,8 +171,8 @@ void f(C&& x) {
 }
 ```
 
-In the case of `args`, we don't know if the args are lvalue, rvalues or a mix.  
-Want to call `move` on args if and only if the args are rvalues.
+In the case of `args`, we don't know if the args are lvalues, rvalues, or a mix.  
+Want to call `move` on `args` if and only if the args are rvalues.
 
 ```C++
 template<typename... Args> void emplace_back(Args&&... args) {
