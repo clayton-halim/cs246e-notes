@@ -65,8 +65,8 @@ v.push_back(Posn {3, 4});
 ```
 
 1. Constructor call to create the Posn object
-2. Copy or move constructor into the vector (depending on whether Posn has a move constructor)
-3. Destructor call on the temporary object
+1. Copy or move constructor into the vector (depending on whether Posn has a move constructor)
+1. Destructor call on the temporary object
 
 Could eliminate (1) and (3) if we could get vector to create the object instead of the client
 - Pass constructor args to the vector and not the actual object
