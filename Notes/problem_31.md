@@ -1,4 +1,4 @@
-[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> I want total control over vectors and lists](./problem_31.md) 
+[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> A fixed-size object allocator](./problem_32.md) 
 
 # Problem 31: I want total control over vectors and lists
 **2017-11-29**
@@ -95,4 +95,4 @@ Allocator::rebind<Node>::other alloc;
 Then use as in vector. Details: exercise
 
 ---
-[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> I want total control over vectors and lists](./problem_31.md) 
+[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> A fixed-size object allocato](./problem_32.md) 
