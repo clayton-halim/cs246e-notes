@@ -81,7 +81,7 @@ So one of the two versions of the copy constructor won't compile (the one with t
 
 Then how is this a valid program?
 
-**C++ rule:** SFINAE (Substituion faliure is not an error)
+**C++ rule:** SFINAE (Substitution Faliure Is Not An Error)
 
 In other words - if `t` is a type,
 
@@ -105,13 +105,13 @@ template<typename T> class vector {
 };
 ```
 
-That is why do we need the extra template out front? 
+That is, why do we need the extra template out front? 
 
 Because SFINAE applies to template functions and these  methods are ordinary functions (constructors), not templates.
 - They depend on `T`, but `T`'s value was deternmined when you decided what to put in the vector
 - If substituting `T=t` fails, it invalidates the entire `vector` class, not just the method
 
-So make a seperate template, with a new arg `X`, which can be defaulted to `T`m and do `is_pod<X>`, not `is_pod<T>`. 
+So make a seperate template, with a new arg `X`, which can be defaulted to `T`, and do `is_pod<X>`, not `is_pod<T>`. 
 
 ... It compiles, but when we run it, it crashes
 
@@ -133,7 +133,7 @@ template<typename T> class vector {
 }
 ```
 
-Not allowed, can't disable the copy constructor and then create one.
+Not allowed, can't disable the copy constructor and then create another copy constructor.
 
 Solution the works: overloading
 
