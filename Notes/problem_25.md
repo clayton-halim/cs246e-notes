@@ -50,13 +50,13 @@ _Second option (no run-time cost):_
 template<typename T> class vector {
     ...
     public:
-        template<typename x = T>
-        vector(enable_if<st::id_pod<X>::value, const T&>::type other): ... {
+        template<typename X = T>
+        vector(enable_if<std::is_pod<X>::value, const T&>::type other): ... {
             memcpy(...);
         }
 
-        template<typename x = T>
-        vector(enable_if<!st::id_pod<X>::value, const T&>::type other): ... {
+        template<typename X = T>
+        vector(enable_if<!std::is_pod<X>::value, const T&>::type other): ... {
             // orignal implementation
         }
 }
@@ -144,10 +144,10 @@ template<typename T> class vector {
     public:
         vector(const vector &other): vector{other, dummy{}} {}
 
-        template<typename x = T> 
+        template<typename X = T> 
         vector(typename enable_if<...>::type other, dummy) { ... }
 
-        template<typename x = T> 
+        template<typename X = T> 
         vector(typename enable_if<...>::type other, dummy) { ... }
 };
 ```
@@ -229,13 +229,16 @@ int &y = z;
 decltype(y) x = z;  // x is an int&
 x = 4;  // Affects z
 
+/* Path/Example 1 */
 auto z;
 x = 4;  // Does not affect z
 
+/* Path/Example 2 */
 decltype(z) s = z;  // s is an int
 s = 5; // Does not affect z
 
-decltype((z)) r = z;    // r is in int&, since (z) is a ref.
+/* Path/Example 3 */
+decltype((z)) r = z;    // r is in int&&, since (z) is a ref.
 r = t;  // Does affect z
 
 decltype(auto) - perform type deduction, like auto, but use the decltype rules
