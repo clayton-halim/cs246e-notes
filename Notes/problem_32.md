@@ -23,7 +23,7 @@ Each slot stores the index of the next slot in the list
 ```
 FIRST
 +---+       +---+---+---+---+-----+----+
-| 1 |       | 1 | 2 | 3 | 4 | ... | -1 |
+| 0 |       | 1 | 2 | 3 | 4 | ... | -1 |
 +---+       +---+---+---+---+-----+----+
 
               0   1   2   3         n-1
@@ -80,8 +80,9 @@ template<typename T, int n> class fsAlloc {
     public:
         fsAlloc() {
             for (int i = 0; i < n - 1; ++i) {
-                theSlots[n - 1] = -1;
+                theSlots[i] = i + 1;
             }
+            theSlots[n - 1] = -1;
         }
 
         T *allocate() noexcept {
