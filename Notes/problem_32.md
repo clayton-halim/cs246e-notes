@@ -80,7 +80,7 @@ template<typename T, int n> class fsAlloc {
     public:
         fsAlloc() {
             for (int i = 0; i < n - 1; ++i) {
-                theSlots[i] = i + 1;
+                theSlots[i].next = i + 1;
             }
             theSlots[n - 1] = -1;
         }
