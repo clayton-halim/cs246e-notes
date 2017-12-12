@@ -67,7 +67,7 @@ How does it work?
 ```C++
 template<bool b, typename> struct enable_if;
 template<typename T> struct enable_if<true, T> {
-    using typename = T;
+    using type = T;
 };
 ```
 
