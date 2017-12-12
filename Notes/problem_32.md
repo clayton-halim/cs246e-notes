@@ -94,7 +94,7 @@ template<typename T, int n> class fsAlloc {
 
         void deallocate(void *item) noexcept {
             int index = (static_cast<char*>(item) - reinterpret_cast<char*>(theSlots)) / sizeof(Slot);
-            theSlots[index].next = fist;
+            theSlots[index].next = first;
             first = index;
         }
 };
