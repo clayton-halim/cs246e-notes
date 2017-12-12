@@ -82,7 +82,7 @@ template<typename T, int n> class fsAlloc {
             for (int i = 0; i < n - 1; ++i) {
                 theSlots[i].next = i + 1;
             }
-            theSlots[n - 1] = -1;
+            theSlots[n - 1].next = -1;
         }
 
         T *allocate() noexcept {
