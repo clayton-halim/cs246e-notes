@@ -73,7 +73,7 @@ template<typename T, template Alloc = allocator<T>> class list { ... }
 
 Correct so far... but curiously, `Alloc` will never be used to allocate memory in a list.
 
-Why not? lists are node-based, which means you don't want to actually allocate `T` objectss; you want to allocate nodes (which contains `T` objects and pointers.)
+Why not? lists are node-based, which means you don't want to actually allocate `T` objects; you want to allocate nodes (which contains `T` objects and pointers.)
 - but `Alloc` allocates `T` objects
 
 How do we get an allocator for nodes?
@@ -95,4 +95,4 @@ Allocator::rebind<Node>::other alloc;
 Then use as in vector. Details: exercise
 
 ---
-[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> A fixed-size object allocato](./problem_32.md) 
+[<< Total Control](./problem_30.md) | [**Home**](../README.md) | [>> A fixed-size object allocator](./problem_32.md) 
