@@ -191,7 +191,7 @@ Doesn't quite work, `T&&` is a universal reference, not an rvalue reference. If 
     - If `T` is an lvalue reference, get rid of the reference
 
 ```C++
-template<typename T> inline typename std::remove_reference<T>::typename && move(T &&x) {
+template<typename T> inline typename std::remove_reference<T>::type && move(T &&x) {
     return static_cast<typename std::remove_reference<T>::type &&>(x);
     // turns T&, T&& into T
 }
