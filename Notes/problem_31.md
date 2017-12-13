@@ -61,14 +61,14 @@ Adapting `vector`:
 - everywhere `vector` calls 
     - `operator new`, replace with `alloc.allocate`
     - `placement new`, replace with `alloc.construct`
-    - `dtor` explicitly, replace with `alloc.deallocate`
+    - `dtor` explicitly, replace with `alloc.destroy`
     - `operator delete`, replace with `alloc.deallocate`
     - takes an address, replace with `alloc.address`
 - Details: exercise
 
 Can we do the same with list?
 ```C++
-template<typename T, template Alloc = allocator<T>> class list { ... } 
+template<typename T, template Alloc = allocator<T>> class list { ... }
 ```
 
 Correct so far... but curiously, `Alloc` will never be used to allocate memory in a list.
