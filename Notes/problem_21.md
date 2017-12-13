@@ -91,7 +91,7 @@ class AbstractBook {
         AbstractBook &operator=(AbstractBook other) { ... } // Non-virtual
 };
 
-class Text: public Book {
+class Text: public AbstractBook {
      public:
         Text &operator=(Text other) {
             AbstractBook::operator=(std::move(other));
