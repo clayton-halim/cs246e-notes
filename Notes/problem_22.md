@@ -86,8 +86,8 @@ The `C++` casting operators - _4 operators_
         ```C++
         Text &Text::operator=(Book other) { // Virtual
             Text &textother = dynamic_cast<Text &>(other);  // Throws if other is not a Text
-            if (this == &textOther) reurn *this;
-            Book::operator(std::move(textother));
+            if (this == &textOther) return *this;
+            Book::operator=(std::move(textother));
             topic = std::move(textother.topic);
             return this; 
         }
