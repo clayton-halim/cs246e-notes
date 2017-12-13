@@ -35,7 +35,7 @@ template<typename T> struct allocator {
 
     pointer address(reference x) const noexcept { return &x; }
     pointer allocate(size_type n) { return ::operator new(n * sizeof(T)); }
-    pointer deallocate(pointer p, size_type n) { return ::operator delete(p)); }
+    pointer deallocate(pointer p, size_type n) { ::operator delete(p)); }
     size_type max_size() const noexcept {
         return std::numeric_traits<size_type>::max(sizeof(value_type));
     }
