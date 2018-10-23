@@ -49,7 +49,7 @@ and you insert at h
  it1      h  it2  
 ```
 
-it2 will not point at a different item.
+it2 will now point at a different item.
 
 **Convention:** after a call to insert or erase all iterators pointing after the point of insertion/erasure are considered invalid and should not be used.
 - Also, if a reallocation happens, _all_ iterators pointing into the vector become invalid.
