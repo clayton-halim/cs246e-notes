@@ -71,7 +71,7 @@ inline const int &Vector::itemAt(size_t i) const {return theVector[i];}
 inline int &vector::itemAt(size_t) {return theVector[i]};
 ```
 
-Putting in `inline` tells the compile to replace the function call with the function body to save the cost of having to call a function
+Putting in `inline` tells the compiler to replace the function call with the function body to save the cost of having to call a function
 
 Merely a suggestion, compiler can choose to ignore it if it sees fit. Good idea for small functions
 
