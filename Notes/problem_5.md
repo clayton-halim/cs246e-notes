@@ -67,14 +67,15 @@ Can combine copy/move assignment:
 struct Node {
     ...
     Node &operator=(Node other) { 
-        swap(other);
+        swap(data, other.data);
+        swap(next, other.next);
         return *this;
     }
 };
 ```
 
 - Unified assignment operator
-    - Pass by value
+    - Pass by value so parameter takes a shallow copy of ```other``` if it's an lvalue
     - Invokes copy constructor if an lvalue
     - Invokes move constructor if an rvalue
 
