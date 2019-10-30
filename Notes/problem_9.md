@@ -87,7 +87,7 @@ class vector {
 
 What happens if a consturctor throws an exception?
 - Object is considered **partially constructed**
-- Destructor will not run on partiall constructed object
+- Destructor will not run on partially constructed object
 
 Ex.
 
