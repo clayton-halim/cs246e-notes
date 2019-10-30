@@ -75,7 +75,7 @@ struct Node {
 ```
 
 - Unified assignment operator
-    - Pass by value so parameter takes a shallow copy of ```other``` if it's an lvalue
+    - Pass by value
     - Invokes copy constructor if an lvalue
     - Invokes move constructor if an rvalue
 
@@ -85,8 +85,8 @@ But now consider:
 
 ```C++
 struct Student {
-    std::string name;
-    Student(const std::string &name): name{name} {  // copies name into field (copy ctor)
+    std::string name; // string is a class
+    Student(const std::string &name): name{name} {  // copies name into field (uses copy ctor)
         ...
     }
 };
@@ -99,7 +99,7 @@ struct Student {
     std::string name;
 
     Student (std::string name): name{name} {  // {name} may come from an rvalue, but it is an lvalue
-        ...
+        ... // in other words, name may refer to an rvalue but name itself is an lvalue
     }
 };
 ```
