@@ -18,7 +18,7 @@ template<typename T> class vector {
 };
 ```
 
-- Partially consturcted vector - destructor will not run
+- Partially constructed vector - destructor will not run
     - Broken invariant
 - **Note:** if `operator new` throws - nothing has been allocated
     - No problem - strong guarantee
