@@ -304,7 +304,7 @@ This is called **polymorphism**.
 How do virtual methods "work" and why are they more expensive? (though not _significantly_ more expensive)
 - Implementation dependent, but the following is most common:
 
-**Vtables** (only contain virutal methods)
+**Vtables** (only contain virtual methods)
 ```C++
 (1)
 +---------+
