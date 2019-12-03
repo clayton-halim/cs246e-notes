@@ -51,7 +51,7 @@ void f() {
 Raising and handling an exception should not corrupt the program. 
 - We desire exception safety.
 
-Leaked are a corruption of your program's memory. This will eventualy degreade performance and crash the program.
+Leaks are a corruption of your program's memory. This will eventualy degrade performance and crash the program.
 
 If a program cannot recover from an expression without corrupting its memory, what's the point of recovering?
 
@@ -73,7 +73,7 @@ void f() {
         throw BadNews{};
     }
 
-    delete p;   // Duplicared effort! Memory management is even harder!
+    delete p;   // Duplicated effort! Memory management is even harder!
 }
 ```
 
