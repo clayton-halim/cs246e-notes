@@ -85,9 +85,9 @@ class vector {
     - If no handler is found, program aborts (`std::terminate` gets called)
     - Control resumes after the catch block (problem code is not retried)
 
-What happens if a consturctor throws an exception?
+What happens if a constructor throws an exception?
 - Object is considered **partially constructed**
-- Destructor will not run on partiall constructed object
+- Destructor will not run on partially constructed object
 
 Ex.
 
