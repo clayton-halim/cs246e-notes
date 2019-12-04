@@ -23,7 +23,7 @@ BUT
 
 ```C++
 unique_ptr<Derived> q = ...
-unique_ptr<Base> std::move(q);  // Wrong
+unique_ptr<Base> p = std::move(q);  // Wrong
 ```
 
 Type error, no conversion between `unique_ptr<Derived>` and `unique_ptr<Base>`
