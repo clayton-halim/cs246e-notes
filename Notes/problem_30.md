@@ -65,7 +65,7 @@ Memory allocators are tricky to write, so we have 2 questions:
         while (true) {
             void *p = malloc(size);
             if (p) return p;
-            std::new_handler h = std::set_new_handler(0);
+            std::new_handler h = std::set_new_handler();
             std::set_new_handler(h);
             if (h) h();
             else throw std::bad_alloc{};
