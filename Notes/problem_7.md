@@ -147,7 +147,7 @@ class list {
         const int &operator[](size_t i) const {
             Node *cur = theList;
             for (size_t j = 0; j < i && cur; ++j, cur=cur->next);
-            return curr->daata;
+            return curr->data;
         }
 
         int &operator[](size_t i) {
