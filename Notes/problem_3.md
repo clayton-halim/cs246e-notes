@@ -35,21 +35,21 @@ namespace CS246E {
         size_t size, cap;
         int *theVector;
     }
+
+    const size_t startsize = 1;
+
+    vector make_vector();
+
+    size_t size(const vector &v);
+
+    int &itemAt(const vector &v, size_t i);
+
+    void push_back(const vector &v, int x);
+
+    void pop_back(const vector&v);
+
+    void dispose(vector &v);
 };
-
-const size_t startsize = 1;
-
-vector make_vector();
-
-size_t size(const vector &v);
-
-int &itemAt(const vector &v, size_t i);
-
-void push_back(const vector &v, int x);
-
-void pop_back(const vector&v);
-
-void dispose(vector &v);
 
 #endif
 ```
